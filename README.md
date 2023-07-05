@@ -20,8 +20,8 @@ Please take a look our hachathon project hosted by [@DeveloperDAO](https://twitt
 1. Clone this git repository and change to the project directory
 
 ```bash
-git clone https://github.com/t4top/mina-wordle-game.git
-cd mina-wordle-game
+git clone https://github.com/zk-auth-com/mina-google-keys.git
+cd mina-google-keys
 ```
 
 2. Install project dependencies
