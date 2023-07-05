@@ -1,18 +1,6 @@
 # google-keys-oracle 
-# Essentially taking from mina-wordle-game-oracle
 
-An oracle server that returns the New York Times Wordle of the day with a Mina compatible signature scheme.
-
-This is the oracle server backend for the [Mina Wordle Game](../README.md). It returns the New York Times Wordle of the day with a Mina compatible signature scheme. It uses `koa` HTTP middleware framework and `pm2` process manager for nodejs.
-
-The oracle server runs on port `3000` by default.
-
-## Demo
-
-The following endpoints are available.
-
-- [/wordle](https://mina-wordle-oracle.juxdan.io/wordle): returns the secret wordle of the day signed with the oracle server account.
-- /wordle/\<date\>: provides wordle for a specific date. For example, [/wordle/2022-12-15](https://mina-wordle-oracle.juxdan.io/wordle/2022-12-15)
+An oracle that validate Google JWT
 
 ## Setup the configurations
 
@@ -47,15 +35,6 @@ npm install
 ```bash
 npm run dev
 ```
-
-## Launch the server for production
-
-Run below command to start the oracle server as a background service.
-
-```bash
-npm start
-```
-
 To stop the server, run below command.
 
 ```bash
