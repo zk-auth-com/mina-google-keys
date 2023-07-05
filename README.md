@@ -2,6 +2,10 @@
 
 Please take a look our hachathon project hosted by [@DeveloperDAO](https://twitter.com/developer_dao) and [@MinaProtocol](https://twitter.com/MinaProtocol)
 
+## Demo Loom
+
+[Can see here](https://www.loom.com/share/ec9531e3d5024572a1492b629d613372?sid=6813901f-88d5-4474-ae4a-e57fd7fff171)
+
 
 ## How it works
 
