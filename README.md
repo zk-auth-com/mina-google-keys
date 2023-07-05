@@ -36,6 +36,4 @@ npm install
 - [contracts](contracts/)
 - [ui](ui/)
 
-## License
 
-[GPL-3.0](./LICENSE)
