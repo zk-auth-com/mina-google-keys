@@ -5,7 +5,14 @@ Please take a look our hachathon project hosted by [@DeveloperDAO](https://twitt
 
 ## How it works
 
-User goes to the web page and got a strong willing to Login With Google
+1. The user visits the web page and expresses a strong desire to log in with Google.
+2. The user clicks on the "Login" button.
+3. The web page's application requests a Google JWT (JSON Web Token) from the user.
+4. The user sends the JWT and specifies the amount of tokens to send to the Smart Contract.
+5. The Smart Contract initiates a request to the oracle.
+6. The oracle retrieves the public key from Google and verifies the RSA signature.
+7. If the signature is valid, the oracle returns the email and nonce signed by the oracle itself.
+8. The Smart Contract receives the data and executes the transaction.
 
 
 ## How to build
