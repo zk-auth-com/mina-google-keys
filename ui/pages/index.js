@@ -12,7 +12,7 @@ export default function Home() {
 
   useEffect(() => {
     window.google.accounts.id.initialize({
-      client_id: "622365820763-19ouop80hhhsferq8mgaclgo2gq1i63c.apps.googleusercontent.com",
+      client_id: "116089001249-mb14nbpt1n9o1q1dpbrho6ss234iqf18.apps.googleusercontent.com",
       callback: handleCallbackResponse
     })
 
