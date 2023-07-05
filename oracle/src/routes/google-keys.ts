@@ -1,5 +1,7 @@
 import type { ParameterizedContext } from "koa";
 
+import * as jwt from 'jsonwebtoken';
+
 import axios from "axios";
 import * as dotenv from "dotenv";
 import { isReady, PrivateKey, Signature, Encoding } from "snarkyjs";
@@ -67,6 +69,7 @@ function verifySignature(
   const verifier = crypto.createVerify('RSA-SHA256');
   verifier.update(msg, 'utf8');
   const signature = Buffer.from(signatureBase64, 'base64');
+  console.log('publicKeyPem', publicKeyPem);
   return verifier.verify(publicKeyPem, signature);
 }
 
