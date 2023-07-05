@@ -1,0 +1,47 @@
+{
+  "name": "mina-wordle-game-oracle",
+  "version": "0.1.0",
+  "description": "An oracle server that returns the New York Times Wordle of the day with a Mina compatible signature scheme",
+  "main": "build/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "npm run build && node .",
+    "start": "npm run build && pm2 start --name \"mina-wordle-game-oracle\" node -- .",
+    "stop": "pm2 delete mina-wordle-game-oracle",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/t4top/mina-wordle-game.git"
+  },
+  "keywords": [
+    "mina",
+    "oracle",
+    "wordle",
+    "zkapp",
+    "snarkyjs"
+  ],
+  "author": "t4top",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/t4top/mina-wordle-game/issues"
+  },
+  "homepage": "https://github.com/t4top/mina-wordle-game#readme",
+  "devDependencies": {
+    "@types/koa": "^2.13.5",
+    "@types/koa__cors": "^3.3.0",
+    "@types/koa__router": "^12.0.0",
+    "@types/node": "^18.11.12",
+    "pm2": "^5.2.2",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "@koa/cors": "^4.0.0",
+    "@koa/router": "^12.0.0",
+    "axios": "^1.2.1",
+    "dotenv": "^16.0.3",
+    "koa": "^2.14.1",
+    "snarkyjs": "^0.7.3"
+  }
+}
