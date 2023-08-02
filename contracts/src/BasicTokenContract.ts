@@ -12,17 +12,16 @@ import {
   Bool
 } from 'snarkyjs';
 
-import { DynamicArray } from './DynamicArray';
 
-const tokenSymbol = 'MYTKN';
+// const tokenSymbol = 'MYTKN';
 const ORACLE_PUBLIC_KEY = 'B62qpkAESZiyU1cLujzipbSw7jyeLBMmNtpz36xusUPWvSXvUD23yrZ'
 
-class FieldArray extends DynamicArray(Field, 39){}
-
 export class BasicTokenContract extends SmartContract {
-  @state(UInt64) totalAmountInCirculation = State<UInt64>();
+  // @state(UInt64) totalAmountInCirculation = State<UInt64>();
   @state(PublicKey) oraclePublicKey = State<PublicKey>();
-  @state(Field) jwtGoogleToken = State<Field>();
+  @state(Field) email = State<Field>();
+  @state(UInt64) nonce = State<UInt64>();
+  @state(Field) oracleKey = State<Field>();
 
   events = {
     verified: Bool,
@@ -43,60 +42,81 @@ export class BasicTokenContract extends SmartContract {
     });
   }
 
-  @method init() {
-    super.init();
-    this.account.tokenSymbol.set(tokenSymbol);
-    this.totalAmountInCirculation.set(UInt64.zero);
+  // @method init() {
+  //   super.init();
+  //   // this.account.tokenSymbol.set(tokenSymbol);
+  //   // this.totalAmountInCirculation.set(UInt64.zero);
+  //   this.oraclePublicKey.set(PublicKey.fromBase58(ORACLE_PUBLIC_KEY));
+  //   this.nonce.set(UInt64.zero);
+  // }
+
+  @method initState(email: Field) {
+    this.email.set(email);
     this.oraclePublicKey.set(PublicKey.fromBase58(ORACLE_PUBLIC_KEY));
+    this.nonce.set(UInt64.zero);
   }
 
-  @method setJWTToken(jwtToken: Field) {
-    this.jwtGoogleToken.set(jwtToken);
-  }
-
-  @method verify(data: Field, signature: Signature) {
+  @method verify(email: Field, signature: Signature) {
     const oraclePublicKey = this.oraclePublicKey.get();
     this.oraclePublicKey.assertEquals(oraclePublicKey);
 
-    const validSignature = signature.verify(oraclePublicKey, [
-      data,
-    ]);
+    // const currentEmail = this.email.get();
+    // email.assertEquals(currentEmail);
+
+    const validSignature = signature.verify(oraclePublicKey, [email,]);
     validSignature.assertTrue();
 
     this.emitEvent('verified', validSignature);
   }
 
-  @method mint(receiverAddress: PublicKey, amount: UInt64, adminSignature: Signature
-  ) {
-    let totalAmountInCirculation = this.totalAmountInCirculation.get();
-    this.totalAmountInCirculation.assertEquals(totalAmountInCirculation);
+  // @method sendTo(destAddress: PublicKey, amount: UInt64, nonce: UInt64, oracleSign: Signature) {
+  //   const oraclePublicKey = this.oraclePublicKey.get();
+  //   this.oraclePublicKey.assertEquals(oraclePublicKey);
+  //   /**
+  //    * Future code
+  //    */
+    
+  //   const currentNonce = this.nonce.get();
+  //   this.nonce.assertEquals(currentNonce);
+  //   const newNonce = currentNonce.add(UInt64.one);
+  //   this.nonce.set(newNonce);
+  // }
 
-    let newTotalAmountInCirculation = totalAmountInCirculation.add(amount);
+  // @method receiveD() {
 
-    adminSignature
-      .verify(
-        this.address,
-        amount.toFields().concat(receiverAddress.toFields())
-      )
-      .assertTrue();
+  // }
 
-    this.token.mint({
-      address: receiverAddress,
-      amount,
-    });
+  // @method mint(receiverAddress: PublicKey, amount: UInt64, adminSignature: Signature
+  // ) {
+  //   let totalAmountInCirculation = this.totalAmountInCirculation.get();
+  //   this.totalAmountInCirculation.assertEquals(totalAmountInCirculation);
 
-    this.totalAmountInCirculation.set(newTotalAmountInCirculation);
-  }
+  //   let newTotalAmountInCirculation = totalAmountInCirculation.add(amount);
 
-  @method sendTokens(
-    senderAddress: PublicKey,
-    receiverAddress: PublicKey,
-    amount: UInt64
-  ) {
-    this.token.send({
-      from: senderAddress,
-      to: receiverAddress,
-      amount,
-    });
-  }
+  //   adminSignature
+  //     .verify(
+  //       this.address,
+  //       amount.toFields().concat(receiverAddress.toFields())
+  //     )
+  //     .assertTrue();
+
+  //   this.token.mint({
+  //     address: receiverAddress,
+  //     amount,
+  //   });
+
+  //   this.totalAmountInCirculation.set(newTotalAmountInCirculation);
+  // }
+
+  // @method sendTokens(
+  //   senderAddress: PublicKey,
+  //   receiverAddress: PublicKey,
+  //   amount: UInt64
+  // ) {
+  //   this.token.send({
+  //     from: senderAddress,
+  //     to: receiverAddress,
+  //     amount,
+  //   });
+  // }
 }

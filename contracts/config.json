@@ -1,4 +1,13 @@
 {
   "version": 1,
-  "networks": {}
+  "deployAliases": {
+    "test1": {
+      "url": "https://proxy.berkeley.minaexplorer.com/graphql",
+      "keyPath": "keys/test1.json",
+      "feepayerKeyPath": "/home/patrice_lumumba/.cache/zkapp-cli/keys/mina-google-keys.json",
+      "feepayerAlias": "mina-google-keys",
+      "fee": "0.1",
+      "smartContract": "BasicTokenContract"
+    }
+  }
 }

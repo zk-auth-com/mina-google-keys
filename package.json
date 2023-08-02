@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/t4top/mina-wordle-game/issues"
   },
-  "homepage": "https://github.com/t4top/mina-wordle-game#readme"
+  "homepage": "https://github.com/t4top/mina-wordle-game#readme",
+  "dependencies": {
+    "snarkyjs": "^0.12.1"
+  }
 }
