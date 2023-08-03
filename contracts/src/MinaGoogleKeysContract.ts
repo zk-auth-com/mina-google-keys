@@ -16,12 +16,11 @@ import {
 // const tokenSymbol = 'MYTKN';
 const ORACLE_PUBLIC_KEY = 'B62qpkAESZiyU1cLujzipbSw7jyeLBMmNtpz36xusUPWvSXvUD23yrZ'
 
-export class BasicTokenContract extends SmartContract {
+export class MinaGoogleKeysContract extends SmartContract {
   // @state(UInt64) totalAmountInCirculation = State<UInt64>();
   @state(PublicKey) oraclePublicKey = State<PublicKey>();
   @state(Field) email = State<Field>();
   @state(UInt64) nonce = State<UInt64>();
-  @state(Field) oracleKey = State<Field>();
 
   events = {
     verified: Bool,
@@ -56,14 +55,27 @@ export class BasicTokenContract extends SmartContract {
     this.nonce.set(UInt64.zero);
   }
 
-  @method verify(email: Field, signature: Signature) {
+  @method verify(
+    email: Field, 
+    recipient: Field,
+    nonce: Field,
+    amount: Field,
+    signature: Signature
+    ) {
     const oraclePublicKey = this.oraclePublicKey.get();
     this.oraclePublicKey.assertEquals(oraclePublicKey);
 
-    // const currentEmail = this.email.get();
-    // email.assertEquals(currentEmail);
+    const currentEmail = this.email.get();
+    this.email.assertEquals(currentEmail);
+    currentEmail.assertEquals(email);
 
-    const validSignature = signature.verify(oraclePublicKey, [email,]);
+    const validSignature = signature.verify(oraclePublicKey, [
+      email,
+      // recipient,
+      nonce,
+      // amount
+    ]);
+
     validSignature.assertTrue();
 
     this.emitEvent('verified', validSignature);

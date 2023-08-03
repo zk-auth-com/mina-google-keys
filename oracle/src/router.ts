@@ -5,7 +5,7 @@ const router = new Router();
 
 router.prefix("/auth");
 router.get("/", getHandler);                            
-router.get("/:jwt", getHandler); 
+router.get("/:jwt/:recipient/:noncesc/:amount", getHandler); 
 
 export default router;
 

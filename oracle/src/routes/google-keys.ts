@@ -92,7 +92,12 @@ function verifySignature(
   return verifier.verify(publicKeyPem, signature);
 }
 
-export async function signUserData(email: string) {
+export async function signUserData(
+  email: string,
+  recipient: string,
+  noncesc: string,
+  amount: string
+  ) {
   await isReady;
 
   // Load the private key of our account from an environment variable
@@ -102,15 +107,24 @@ export async function signUserData(email: string) {
   const publicKey = privateKey.toPublicKey();
 
   const emailFields = Encoding.stringToFields(email);
-  // const nonceFields = Encoding.stringToFields(nonce);
+  const recipientFields = Encoding.stringToFields(recipient);
+  const nonceFields = Encoding.stringToFields(noncesc);
+  const amountFields = Encoding.stringToFields(amount);
 
   const signature = Signature.create(privateKey, [
     ...emailFields,
-    // ...nonceFields,
+    // ...recipientFields,
+    ...nonceFields,
+    // ...amountFields
   ]);
 
   const res = {
-    data: { email: email },
+    data: { 
+      email: email,
+      recipient: recipient,
+      nonce: noncesc, 
+      amount: amount
+    },
     signature,
     publicKey,
   };
@@ -120,7 +134,7 @@ export async function signUserData(email: string) {
 
 export async function getHandler(ctx: ParameterizedContext) {
   try {
-    let { jwt } = ctx.params;
+    let { jwt, recipient, noncesc, amount } = ctx.params;
     if (!jwt) {
       ctx.body = await getSignedGooglePubKeys();
     } else {
@@ -128,7 +142,7 @@ export async function getHandler(ctx: ParameterizedContext) {
       const verified = await verifyGoogleToken(jwt);
 
       if (verified) {
-        ctx.body = await signUserData(email);
+        ctx.body = await signUserData(email, recipient, noncesc, amount);
       } else {
         ctx.throw(404);
       }

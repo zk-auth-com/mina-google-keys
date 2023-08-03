@@ -1,4 +1,3 @@
-import { WhitelistedTokenContract } from './WhitelistedTokenContract.js';
-import { BasicTokenContract } from './BasicTokenContract.js';
+import { MinaGoogleKeysContract } from './MinaGoogleKeysContract.js';
 
-export { BasicTokenContract, WhitelistedTokenContract };
+export { MinaGoogleKeysContract };
