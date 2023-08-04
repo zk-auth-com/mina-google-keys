@@ -1,13 +1,13 @@
 {
   "version": 1,
   "deployAliases": {
-    "test1": {
+    "mina-google-keys-contract-1": {
       "url": "https://proxy.berkeley.minaexplorer.com/graphql",
-      "keyPath": "keys/test1.json",
-      "feepayerKeyPath": "/home/patrice_lumumba/.cache/zkapp-cli/keys/mina-google-keys.json",
-      "feepayerAlias": "mina-google-keys",
+      "keyPath": "keys/mina-google-keys-contract-1.json",
+      "feepayerKeyPath": "/home/patrice_lumumba/.cache/zkapp-cli/keys/feepayer1.json",
+      "feepayerAlias": "feepayer1",
       "fee": "0.1",
-      "smartContract": "BasicTokenContract"
+      "smartContract": "MinaGoogleKeysContract"
     }
   }
 }
