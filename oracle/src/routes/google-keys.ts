@@ -5,7 +5,7 @@ import fetch from "node-fetch";
 
 import axios from "axios";
 import * as dotenv from "dotenv";
-import { isReady, PrivateKey, Signature, Encoding } from "snarkyjs";
+import { PrivateKey, Signature, Encoding } from "snarkyjs";
 import crypto from "crypto";
 
 dotenv.config();
@@ -27,7 +27,6 @@ async function getSignedGooglePubKeys() {
   // if (wordleCache.has(date)) return wordleCache.get(date);
 
   // Wait for SnarkyJS to finish loading before we can do anything
-  await isReady;
 
   // get wordle of the specified date from backend oracle
   const { keys } = await getGooglePubKeys();
@@ -94,11 +93,10 @@ function verifySignature(
 
 export async function signUserData(
   email: string,
-  recipient: string,
-  noncesc: string,
-  amount: string
+  // recipient: string,
+  // noncesc: string,
+  // amount: string
   ) {
-  await isReady;
 
   // Load the private key of our account from an environment variable
   const privateKey = PrivateKey.fromBase58(process.env.PRIVATE_KEY || "");
@@ -107,23 +105,23 @@ export async function signUserData(
   const publicKey = privateKey.toPublicKey();
 
   const emailFields = Encoding.stringToFields(email);
-  const recipientFields = Encoding.stringToFields(recipient);
-  const nonceFields = Encoding.stringToFields(noncesc);
-  const amountFields = Encoding.stringToFields(amount);
+  // const recipientFields = Encoding.stringToFields(recipient);
+  // const nonceFields = Encoding.stringToFields(noncesc);
+  // const amountFields = Encoding.stringToFields(amount);
 
   const signature = Signature.create(privateKey, [
     ...emailFields,
     // ...recipientFields,
-    ...nonceFields,
+    // ...nonceFields,
     // ...amountFields
   ]);
 
   const res = {
     data: { 
       email: email,
-      recipient: recipient,
-      nonce: noncesc, 
-      amount: amount
+      // recipient: recipient,
+      // nonce: noncesc, 
+      // amount: amount
     },
     signature,
     publicKey,
@@ -134,7 +132,13 @@ export async function signUserData(
 
 export async function getHandler(ctx: ParameterizedContext) {
   try {
-    let { jwt, recipient, noncesc, amount } = ctx.params;
+    let { 
+      jwt, 
+      // recipient, 
+      // noncesc, 
+      // amount 
+    }
+       = ctx.params;
     if (!jwt) {
       ctx.body = await getSignedGooglePubKeys();
     } else {
@@ -142,7 +146,7 @@ export async function getHandler(ctx: ParameterizedContext) {
       const verified = await verifyGoogleToken(jwt);
 
       if (verified) {
-        ctx.body = await signUserData(email, recipient, noncesc, amount);
+        ctx.body = await signUserData(email);
       } else {
         ctx.throw(404);
       }

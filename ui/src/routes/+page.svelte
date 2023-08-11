@@ -1,23 +1,24 @@
 <script>
     import { onMount } from 'svelte'
-    import ZkappClient from "$lib/zkapp/zkappClient";
+    // import ZkappClient from "$lib/zkapp/zkappClient";
 
     const clientId = import.meta.env.VITE_CLIENT_ID;
-    const network = import.meta.env.VITE_BERKELEY_ENDPOINT;
-    const zkAppPublicKey = import.meta.env.VITE_PUBLIC_KEY_SMART_CONTRACT;
+    // const network = import.meta.env.VITE_BERKELEY_ENDPOINT;
+    // const zkAppPublicKey = import.meta.env.VITE_PUBLIC_KEY_SMART_CONTRACT;
     const recipient = 'B62qr9xRiL2qgiRydwzQLDcxnSwXzPUHogNK9myYVVaxNunyBAbouKo'
     const amount = '55'
+    const nonce = '0'
 
     onMount(async () => {
 
         // @ts-ignore
         const handleCredentialResponse = async (response) => {
-            const zkApp = new ZkappClient();
-            zkApp.setContract(network, zkAppPublicKey);
-            const nonce = zkApp.getStateValue("nonce");
+            // const zkApp = new ZkappClient();
+            // zkApp.setContract(network, zkAppPublicKey);
+            // const nonce = zkApp.getStateValue("nonce");
 
             console.log('Encoded JWT ID token: ' + response.credential);
-            fetch(`http://localhost:3030/auth/${response.credential}/${recipient}/${nonce}/${amount}`)
+            fetch(`http://localhost:3030/auth/${response.credential}`)
             .then((response) => {
                 if(!response.ok){
                     throw new Error('Network response was not ok');

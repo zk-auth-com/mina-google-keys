@@ -9,7 +9,9 @@ import {
   PublicKey,
   Signature,
   Field,
-  Bool
+  Bool,
+  AccountUpdate,
+  Mina
 } from 'snarkyjs';
 
 
@@ -36,18 +38,10 @@ export class MinaGoogleKeysContract extends SmartContract {
       ...Permissions.default(),
       editState: permissionToEdit,
       setTokenSymbol: permissionToEdit,
-      send: permissionToEdit,
+      send: Permissions.proofOrSignature(),
       receive: permissionToEdit,
     });
   }
-
-  // @method init() {
-  //   super.init();
-  //   // this.account.tokenSymbol.set(tokenSymbol);
-  //   // this.totalAmountInCirculation.set(UInt64.zero);
-  //   this.oraclePublicKey.set(PublicKey.fromBase58(ORACLE_PUBLIC_KEY));
-  //   this.nonce.set(UInt64.zero);
-  // }
 
   @method initState(email: Field) {
     this.email.set(email);
@@ -57,11 +51,14 @@ export class MinaGoogleKeysContract extends SmartContract {
 
   @method verify(
     email: Field, 
-    recipient: Field,
-    nonce: Field,
-    amount: Field,
+    recipient: PublicKey,
+    amount: UInt64,
     signature: Signature
     ) {
+    // amount.assertGreaterThan(UInt64.from(0));
+    // const senderBalance = Mina.getBalance(this.sender);
+    // senderBalance.assertGreaterThanOrEqual(amount);
+
     const oraclePublicKey = this.oraclePublicKey.get();
     this.oraclePublicKey.assertEquals(oraclePublicKey);
 
@@ -71,12 +68,16 @@ export class MinaGoogleKeysContract extends SmartContract {
 
     const validSignature = signature.verify(oraclePublicKey, [
       email,
-      // recipient,
-      nonce,
-      // amount
     ]);
 
     validSignature.assertTrue();
+
+    const payerUpdate = AccountUpdate.create(this.sender);
+    payerUpdate.requireSignature();
+    payerUpdate.send({
+      to: recipient,
+      amount
+    })
 
     this.emitEvent('verified', validSignature);
   }

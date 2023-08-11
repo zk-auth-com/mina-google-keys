@@ -13,13 +13,14 @@ console.log('SnarkyJS loaded');
 const ORACLE_PUBLIC_KEY = 'B62qpkAESZiyU1cLujzipbSw7jyeLBMmNtpz36xusUPWvSXvUD23yrZ'
 
 const JWTGOOGLETOKEN = 
-'eyJhbGciOiJSUzI1NiIsImtpZCI6IjkxMWUzOWUyNzkyOGFlOWYxZTlkMWUyMTY0NmRlOTJkMTkzNTFiNDQiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMTYwODkwMDEyNDktbWIxNG5icHQxbjlvMXExZHBicmhvNnNzMjM0aXFmMTguYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIxMTYwODkwMDEyNDktbWIxNG5icHQxbjlvMXExZHBicmhvNnNzMjM0aXFmMTguYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDExMTE2MTA4MDM3MjIxMzEzOTMiLCJlbWFpbCI6Im1laG1lbmJlckBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmJmIjoxNjkxMDkzNTYyLCJuYW1lIjoia2xpdmxlbmQgaG9vdmVyIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FBY0hUdGZiWjBXSFk0c1NnQUp2VThyR1pPenkwM3BYNlg1NGxQMGxSSHFGZ2x2ZT1zOTYtYyIsImdpdmVuX25hbWUiOiJrbGl2bGVuZCIsImZhbWlseV9uYW1lIjoiaG9vdmVyIiwibG9jYWxlIjoicnUiLCJpYXQiOjE2OTEwOTM4NjIsImV4cCI6MTY5MTA5NzQ2MiwianRpIjoiNjA2Mzk5NWYzYzBiYTg3YmQ2ZGRkZjVjNjNlYzJkMGIzOWNhZmFmMSJ9.MF_9Ol19AkE74G3tmcOn938V5uzuEwZURBJ2kKyQHQk9HhcGnQIuQrU34DrppsXPLeYtuXxpOebdOO7_Z8qyS-jyrovmeGGlS4tlHnG0O_HSlpNEv5LTSgFtzpYxrZpUEdbJlnJVQHmNIgMyw4hf0Trjvg825pJw2x0ZKyx3q9x9Ndbv-CE9i0zN-BE6RGCYDaJPF5UTF66OkKnfYPEtvHv_P-9Eo0qMjwWgRQK_k8XlP7XWHSTDCQ2nHiNqPqdE7CJizIxqB_31MTcAbPM6jbJ8QePh7hWhY_N2l5XUH61z3KWf22kRf4o3VDOxvgrsJSfFWXhXdZgbn_p5oMUwjg'
+
+'eyJhbGciOiJSUzI1NiIsImtpZCI6IjdjOWM3OGUzYjAwZTFiYjA5MmQyNDZjODg3YjExMjIwYzg3YjdkMjAiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMTYwODkwMDEyNDktbWIxNG5icHQxbjlvMXExZHBicmhvNnNzMjM0aXFmMTguYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIxMTYwODkwMDEyNDktbWIxNG5icHQxbjlvMXExZHBicmhvNnNzMjM0aXFmMTguYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDExMTE2MTA4MDM3MjIxMzEzOTMiLCJlbWFpbCI6Im1laG1lbmJlckBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmJmIjoxNjkxNjg4MzA4LCJuYW1lIjoia2xpdmxlbmQgaG9vdmVyIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FBY0hUdGZiWjBXSFk0c1NnQUp2VThyR1pPenkwM3BYNlg1NGxQMGxSSHFGZ2x2ZT1zOTYtYyIsImdpdmVuX25hbWUiOiJrbGl2bGVuZCIsImZhbWlseV9uYW1lIjoiaG9vdmVyIiwibG9jYWxlIjoicnUiLCJpYXQiOjE2OTE2ODg2MDgsImV4cCI6MTY5MTY5MjIwOCwianRpIjoiZDg3MjUzOTg3ZTNjMWIxY2ZlYmQ5ZjQwZTFlN2M3YjA0NmU1YzgzMiJ9.YoHzcFmqaMT7l_OuW7SgotX9GeklDkHNHl-yqfvukJz4mahpsCdTupfVnGTX6uHp3PKtn2zFD_kQBCHvkFAzl2w1b9FGSAYW-3zzuvR5Bn-UFGJd6Yg39z4KliAzlhJRNc3fhI5xu-pIJC_xWx2Li2I236rVyhENQC2oRqGqr_50gGs2I-__ODiir4EIL-oHha-bz-Ob0f8SBb_UnJ1ScFO9LxyQnLXEoHHQh8FEFvSqH3rhO_c6SIZKNw-E6cxM_Eif-z8p623jbJZYIyCK9jUjC17CYyFNePVSWWPYzpYadDgMPnUCMB_6nk-0Hj10Mg9bVWCO-PQa9MksSvRaXA'
 
 const recipient = 'B62qr9xRiL2qgiRydwzQLDcxnSwXzPUHogNK9myYVVaxNunyBAbouKo'
 const nonce = '0'
-const amount = '55'
+// const amount = '55'
 
-const ORACLE_ENDPOINT = `http://localhost:3030/auth/${JWTGOOGLETOKEN}/${recipient}/${nonce}/${amount}`
+const ORACLE_ENDPOINT = `http://localhost:3030/auth/${JWTGOOGLETOKEN}`
 
 // const ORACLE_ENDPOINTS = [
 //   'http://localhost:3000/auth',
@@ -30,6 +31,8 @@ const proofsEnabled = false;
 const Local = Mina.LocalBlockchain({ proofsEnabled });
 Mina.setActiveInstance(Local);
 const deployerAccount = Local.testAccounts[0].privateKey;
+const recipientAccount = Local.testAccounts[1].privateKey;
+const senderAccount = Local.testAccounts[2].privateKey;
 // ----------------------------------------------------
 
 const zkAppPrivateKey = PrivateKey.random();
@@ -100,110 +103,39 @@ const response1 = await fetch(ORACLE_ENDPOINT)
 const data1 = await response1.json()
 
 const email1 = data1.data.email
-const recipient1 = data1.data.recipient
-const nonce1 = data1.data.nonce
-const amount1 = data1.data.amount
 
 const emailFields1 = Encoding.stringToFields(email1)[0]
-const recipientFields = Encoding.stringToFields(recipient1)[0]
-const nonceFields = Encoding.stringToFields(nonce1)[0]
-const amountFields = Encoding.stringToFields(amount1)[0]
 
 const signature = Signature.fromJSON(data1.signature)
 
-const verify_txn = await Mina.transaction(deployerAccount.toPublicKey(), () => {
+const amount: UInt64 = UInt64.from(1e9).div(1e9);
+
+const currentSenderBalance = Mina.getBalance(senderAccount.toPublicKey())
+const currentRecipientBalance = Mina.getBalance(recipientAccount.toPublicKey())
+
+console.log(`Sender's balance before transaction: ${currentSenderBalance.toString()}`)
+console.log(`Recipient balance before transaction: ${currentRecipientBalance.toString()}`)
+console.log(`Amount to send: ${amount.toString()}`)
+
+const verify_txn = await Mina.transaction(senderAccount.toPublicKey(), () => {
   contract.verify(
     emailFields1, 
-    recipientFields,
-    nonceFields,
-    amountFields,
+    recipientAccount.toPublicKey(),
+    amount,
     signature ?? fail('something is wrong with the signature'))
 })
 
 await verify_txn.prove();
-await verify_txn.sign([deployerAccount]).send();
+await verify_txn.sign([senderAccount]).send();
 
 
 console.log('verified')
 
-// console.log('Seting JWT token...')
+const senderBalanceByNow = Mina.getBalance(senderAccount.toPublicKey())
+const recipientBalanceByNow = Mina.getBalance(recipientAccount.toPublicKey())
 
-// const jwtTokenToField = Encoding.stringToFields(JWTGOOGLETOKEN)
-
-// const setJWTTokenTx = await Mina.transaction(deployerAccount.toPublicKey(), () => {
-//   contract.setJWTToken(jwtTokenToField)
-// })
-
-// await setJWTTokenTx.prove();
-// await setJWTTokenTx.sign([deployerAccount]).send();
-
-// const jwtTokenFromSmartContractField = contract.jwtGoogleToken.get()
-// const jwtTokenFromFieldToString = Encoding.stringFromFields(jwtTokenFromSmartContractField)
-
-// console.log('JWT Token was seted successfull')
-// console.log(`JWT Google Token: ${jwtTokenFromFieldToString.toString()}`)
-
-
-// console.log('minting...');
-
-// const mintAmount = UInt64.from(10);
-
-// const mintSignature = Signature.create(
-//   zkAppPrivateKey,
-//   mintAmount.toFields().concat(zkAppAddress.toFields())
-// );
-
-// const mint_txn = await Mina.transaction(deployerAccount.toPublicKey(), () => {
-//   AccountUpdate.fundNewAccount(deployerAccount.toPublicKey());
-//   contract.mint(zkAppAddress, mintAmount, mintSignature);
-// });
-
-// await mint_txn.prove();
-// await mint_txn.sign([deployerAccount]).send();
-
-// console.log('minted');
-
-// console.log(
-//   contract.totalAmountInCirculation.get() +
-//     ' ' +
-//     Mina.getAccount(zkAppAddress).tokenSymbol
-// );
-
-// ----------------------------------------------------
-
-// console.log('sending...');
-
-// const sendAmount = UInt64.from(3);
-
-// const send_txn = await Mina.transaction(deployerAccount.toPublicKey(), () => {
-//   AccountUpdate.fundNewAccount(deployerAccount.toPublicKey());
-//   contract.sendTokens(zkAppAddress, deployerAccount.toPublicKey(), sendAmount);
-// });
-// await send_txn.prove();
-// await send_txn.sign([deployerAccount]).send();
-
-// console.log('sent');
-
-// console.log(
-//   contract.totalAmountInCirculation.get() +
-//     ' ' +
-//     Mina.getAccount(zkAppAddress).tokenSymbol
-// );
-
-// // ----------------------------------------------------
-
-// console.log(
-//   'deployer tokens:',
-//   Mina.getBalance(
-//     deployerAccount.toPublicKey(),
-//     contract.token.id
-//   ).value.toBigInt()
-// );
-
-// console.log(
-//   'zkapp tokens:',
-//   Mina.getBalance(zkAppAddress, contract.token.id).value.toBigInt()
-// );
+console.log(`Sender's balance after transaction: ${senderBalanceByNow.toString()}`)
+console.log(`Recipient balance after transaction: ${recipientBalanceByNow.toString()}`)
 
 // ----------------------------------------------------
 
