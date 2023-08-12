@@ -10,8 +10,7 @@ import {
   Signature,
   Field,
   Bool,
-  AccountUpdate,
-  Mina
+  AccountUpdate
 } from 'snarkyjs';
 
 
@@ -49,7 +48,7 @@ export class MinaGoogleKeysContract extends SmartContract {
     this.nonce.set(UInt64.zero);
   }
 
-  @method verify(
+  @method verifyAndSend(
     email: Field, 
     recipient: PublicKey,
     amount: UInt64,
@@ -79,57 +78,12 @@ export class MinaGoogleKeysContract extends SmartContract {
       amount
     })
 
+    const currentNonce = this.nonce.get()
+    this.nonce.assertEquals(currentNonce);
+    const newNonce = currentNonce.add(UInt64.one);
+    this.nonce.set(newNonce); 
+
     this.emitEvent('verified', validSignature);
   }
-
-  // @method sendTo(destAddress: PublicKey, amount: UInt64, nonce: UInt64, oracleSign: Signature) {
-  //   const oraclePublicKey = this.oraclePublicKey.get();
-  //   this.oraclePublicKey.assertEquals(oraclePublicKey);
-  //   /**
-  //    * Future code
-  //    */
-    
-  //   const currentNonce = this.nonce.get();
-  //   this.nonce.assertEquals(currentNonce);
-  //   const newNonce = currentNonce.add(UInt64.one);
-  //   this.nonce.set(newNonce);
-  // }
-
-  // @method receiveD() {
-
-  // }
-
-  // @method mint(receiverAddress: PublicKey, amount: UInt64, adminSignature: Signature
-  // ) {
-  //   let totalAmountInCirculation = this.totalAmountInCirculation.get();
-  //   this.totalAmountInCirculation.assertEquals(totalAmountInCirculation);
-
-  //   let newTotalAmountInCirculation = totalAmountInCirculation.add(amount);
-
-  //   adminSignature
-  //     .verify(
-  //       this.address,
-  //       amount.toFields().concat(receiverAddress.toFields())
-  //     )
-  //     .assertTrue();
-
-  //   this.token.mint({
-  //     address: receiverAddress,
-  //     amount,
-  //   });
-
-  //   this.totalAmountInCirculation.set(newTotalAmountInCirculation);
-  // }
-
-  // @method sendTokens(
-  //   senderAddress: PublicKey,
-  //   receiverAddress: PublicKey,
-  //   amount: UInt64
-  // ) {
-  //   this.token.send({
-  //     from: senderAddress,
-  //     to: receiverAddress,
-  //     amount,
-  //   });
-  // }
+  
 }

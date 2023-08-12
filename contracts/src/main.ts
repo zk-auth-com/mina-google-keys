@@ -14,7 +14,7 @@ const ORACLE_PUBLIC_KEY = 'B62qpkAESZiyU1cLujzipbSw7jyeLBMmNtpz36xusUPWvSXvUD23y
 
 const JWTGOOGLETOKEN = 
 
-'eyJhbGciOiJSUzI1NiIsImtpZCI6IjdjOWM3OGUzYjAwZTFiYjA5MmQyNDZjODg3YjExMjIwYzg3YjdkMjAiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMTYwODkwMDEyNDktbWIxNG5icHQxbjlvMXExZHBicmhvNnNzMjM0aXFmMTguYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIxMTYwODkwMDEyNDktbWIxNG5icHQxbjlvMXExZHBicmhvNnNzMjM0aXFmMTguYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDExMTE2MTA4MDM3MjIxMzEzOTMiLCJlbWFpbCI6Im1laG1lbmJlckBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmJmIjoxNjkxNjg4MzA4LCJuYW1lIjoia2xpdmxlbmQgaG9vdmVyIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FBY0hUdGZiWjBXSFk0c1NnQUp2VThyR1pPenkwM3BYNlg1NGxQMGxSSHFGZ2x2ZT1zOTYtYyIsImdpdmVuX25hbWUiOiJrbGl2bGVuZCIsImZhbWlseV9uYW1lIjoiaG9vdmVyIiwibG9jYWxlIjoicnUiLCJpYXQiOjE2OTE2ODg2MDgsImV4cCI6MTY5MTY5MjIwOCwianRpIjoiZDg3MjUzOTg3ZTNjMWIxY2ZlYmQ5ZjQwZTFlN2M3YjA0NmU1YzgzMiJ9.YoHzcFmqaMT7l_OuW7SgotX9GeklDkHNHl-yqfvukJz4mahpsCdTupfVnGTX6uHp3PKtn2zFD_kQBCHvkFAzl2w1b9FGSAYW-3zzuvR5Bn-UFGJd6Yg39z4KliAzlhJRNc3fhI5xu-pIJC_xWx2Li2I236rVyhENQC2oRqGqr_50gGs2I-__ODiir4EIL-oHha-bz-Ob0f8SBb_UnJ1ScFO9LxyQnLXEoHHQh8FEFvSqH3rhO_c6SIZKNw-E6cxM_Eif-z8p623jbJZYIyCK9jUjC17CYyFNePVSWWPYzpYadDgMPnUCMB_6nk-0Hj10Mg9bVWCO-PQa9MksSvRaXA'
+'eyJhbGciOiJSUzI1NiIsImtpZCI6IjdjOWM3OGUzYjAwZTFiYjA5MmQyNDZjODg3YjExMjIwYzg3YjdkMjAiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMTYwODkwMDEyNDktbWIxNG5icHQxbjlvMXExZHBicmhvNnNzMjM0aXFmMTguYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIxMTYwODkwMDEyNDktbWIxNG5icHQxbjlvMXExZHBicmhvNnNzMjM0aXFmMTguYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDExMTE2MTA4MDM3MjIxMzEzOTMiLCJlbWFpbCI6Im1laG1lbmJlckBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmJmIjoxNjkxNzczODEzLCJuYW1lIjoia2xpdmxlbmQgaG9vdmVyIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FBY0hUdGZiWjBXSFk0c1NnQUp2VThyR1pPenkwM3BYNlg1NGxQMGxSSHFGZ2x2ZT1zOTYtYyIsImdpdmVuX25hbWUiOiJrbGl2bGVuZCIsImZhbWlseV9uYW1lIjoiaG9vdmVyIiwibG9jYWxlIjoicnUiLCJpYXQiOjE2OTE3NzQxMTMsImV4cCI6MTY5MTc3NzcxMywianRpIjoiNTI3OTQ5NjU2ODc3NGY5MGRmMTM5YzUwOGIxYjQ5Yjc4MDQ4ZTZhNCJ9.J1qAjSUKMED5SciqHytcijhy-GEb0ACPt3cJsOxxS6r2V7vvEcce-Nf9oO6B8lHqD887PzDkhjyO5QIUdrjj0bi5tkKodK9RmEsg65RZFMIM6Z8SWJuXWRGx_ABsj315uM_PZLNlLGEYjvTISsFsKYzxZkEeGXroeV_-SUhv1tIwEHolyw4JYUzvrMQW1PDlP3DJ13LH72DFYUVw8RJuk8ecaZxZY6pYDpp4UPstDBzLKSgoGUvp3Vzf3_vaI1BPMaSQQg_zjGJx7JzYaeQpWfK8hgn17kkKRs8_bCoEUs5TOCr-EZaJ8jpxf_QqI-CQAhTdHDCUT3V_oILSGyb8Lw'
 
 const recipient = 'B62qr9xRiL2qgiRydwzQLDcxnSwXzPUHogNK9myYVVaxNunyBAbouKo'
 const nonce = '0'
@@ -83,20 +83,20 @@ console.log('getting info...');
 
 const currentNonce = contract.nonce.get();
 
-console.log(`current nonce is ${currentNonce}`);
+console.log(`Current nonce is ${currentNonce}`);
 
 const oraclePublicKey = contract.oraclePublicKey.get();
 
-console.log(`oracle public key is ${oraclePublicKey.toBase58()}`);
+console.log(`Oracle public key is ${oraclePublicKey.toBase58()}`);
 
 const emailInField = contract.email.get();
 const emailInString = Encoding.stringFromFields([emailInField]);
 
-console.log(`email is ${emailInString}`);
+console.log(`Email is ${emailInString}`);
 
 // ----------------------------------------------------
 
-console.log('verifying...')
+console.log('verifying and sending...')
 
 
 const response1 = await fetch(ORACLE_ENDPOINT)
@@ -118,7 +118,7 @@ console.log(`Recipient balance before transaction: ${currentRecipientBalance.toS
 console.log(`Amount to send: ${amount.toString()}`)
 
 const verify_txn = await Mina.transaction(senderAccount.toPublicKey(), () => {
-  contract.verify(
+  contract.verifyAndSend(
     emailFields1, 
     recipientAccount.toPublicKey(),
     amount,
@@ -129,13 +129,15 @@ await verify_txn.prove();
 await verify_txn.sign([senderAccount]).send();
 
 
-console.log('verified')
+console.log('verified and sent')
 
 const senderBalanceByNow = Mina.getBalance(senderAccount.toPublicKey())
 const recipientBalanceByNow = Mina.getBalance(recipientAccount.toPublicKey())
+const newNonce = contract.nonce.get()
 
 console.log(`Sender's balance after transaction: ${senderBalanceByNow.toString()}`)
 console.log(`Recipient balance after transaction: ${recipientBalanceByNow.toString()}`)
+console.log(`New nonce is ${newNonce.toString()}`)
 
 // ----------------------------------------------------
 
