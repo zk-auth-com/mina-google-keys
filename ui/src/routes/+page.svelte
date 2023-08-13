@@ -78,6 +78,9 @@
     {#if !jwt}
         <p class="mb-10 text-lg font-semibold">First of all connect log into your google account</p>
     {/if}
+    {#if !jwt}
+    <div class="mt-16" id="signInDiv"/>
+    {:else}
     <div class="
     bg-white
     flex 
@@ -87,9 +90,6 @@
     border-zinc-400
     rounded-lg">
     <div class="flex flex-col mt-3 mr-24 ml-24 mb-24 gap-4">
-        {#if !jwt}
-            <div class="mt-16" id="signInDiv"/>
-        {:else}
         <div class="flex flex-col gap-4">
             <div class="border rounded-lg bg-sky-100 h-16 w-72">
                 <p class="text-gray-500 ml-28">Amount</p>
@@ -123,7 +123,7 @@
                     Send Money
                 </button>
         </div>
-        {/if}
-        </div>
     </div>
+</div>
+{/if}
 </main>
