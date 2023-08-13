@@ -1,8 +1,8 @@
-import server from "./server"
+import {Run} from "./server.js"
 
 
 const main = async () => {
-	await Promise.all([server()])
+	await Promise.all([Run()])
 }
 
 main().catch(console.error)

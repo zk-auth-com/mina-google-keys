@@ -3,6 +3,7 @@
     "version": "0.1.0",
     "description": "Server for send transaction in mina blockchain",
     "main": "src/main.ts",
+    "type": "module",
     "scripts": {
         "start": "node --loader ts-node/esm src/main.ts"
         
