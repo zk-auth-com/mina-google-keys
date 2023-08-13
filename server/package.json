@@ -1,0 +1,26 @@
+{ 
+    "name": "zk-auth-server",
+    "version": "0.1.0",
+    "description": "Server for send transaction in mina blockchain",
+    "main": "src/main.ts",
+    "type": "module",
+    "scripts": {
+        "start": "node --loader ts-node/esm src/main.ts"
+        
+    },
+    "keywords": [
+        "mina",
+        "blockchain",
+        "zkAuth"
+    ],
+    "author": "zkAuth",
+    "license": "UNLICENSED",
+    "dependencies": {
+        "@types/node": "^18.15.11",
+        "@fastify/swagger": "^8.3.1",
+		"@fastify/swagger-ui": "^1.6.0",
+        "fastify": "4.10.2",
+        "ts-node": "10.9.1",
+		"typescript": "4.9.4"
+    }
+}
