@@ -72,6 +72,7 @@ const RunServer = async () => {
 
   await app.register(async (route) => {
     route.get("/send_to_contract", async (request, reply) => {
+      reply.header("Access-Control-Allow-Origin", "*");
       await reply.send({ Result: "OK" });
     });
     route.post(
@@ -79,7 +80,7 @@ const RunServer = async () => {
       sendTxFromContractSchema,
       async (request, reply) => {
         console.log("tx info ", request.body);
-
+        reply.header("Access-Control-Allow-Origin", "*");
         await reply.send({ Result: { tx: "0x1234567890" } });
       }
     );
