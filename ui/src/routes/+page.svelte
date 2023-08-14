@@ -6,36 +6,72 @@
     // const network = import.meta.env.VITE_BERKELEY_ENDPOINT;
     // const zkAppPublicKey = import.meta.env.VITE_PUBLIC_KEY_SMART_CONTRACT;
     let recipient = '';
-    let amount = '';
-    const nonce = '0';
-    /**
-   * @type {any}
-   */
-    let jwt;
+    // @ts-ignore
+    let amount = 0;
+    let nonce = 0;
+    let jwt = '';
+    let email = '';
+    let signature = '';
+    let loading = true;
+
 
     async function getMoney() {
-        const response = await fetch('');
-        const answer = await response.json()
-
+        try {
+            const response = await fetch('http://91.240.85.151:3001/send_to_contract', {
+                method: "GET" // default, so we can ignore
+            });
+            const data = await response.json();
+            console.log(data)
+        } catch (err) {
+            console.log(`Error: ${err}`)
+        } 
     }
 
-    async function sendMoney() {
-        const response = await fetch('');
-        const answer = await response.json()
+    function sendMoney() {
+        fetch('http://localhost:3001/send_tx_from_contract', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            // @ts-ignore
+            body: {
+                // @ts-ignore
+                "tx_data": {
+                    // @ts-ignore
+                    "email": email,
+                    "recipient": recipient,
+                    "nonce": nonce,
+                    // @ts-ignore
+                    "amount": amount
+                },
+                "signature": signature
+            }
+        })
+        .then((response) => {
+            if(!response.ok){
+                throw new Error('Network response was not ok');
+            }
+            return response.json()
+        })
+        .then((data) => {
+            console.log(data)
+        })
+        .catch((error) => {
+            console.error(error)
+        })
 
     }
 
     onMount(async () => {
-
         // @ts-ignore
         const handleCredentialResponse = async (response) => {
             // const zkApp = new ZkappClient();
             // zkApp.setContract(network, zkAppPublicKey);
             // const nonce = zkApp.getStateValue("nonce");
 
-            jwt = response.credential;
-
+            
             console.log('Encoded JWT ID token: ' + response.credential);
+            jwt = response.credential;
             fetch(`http://localhost:3030/auth/${response.credential}`)
             .then((response) => {
                 if(!response.ok){
@@ -45,6 +81,9 @@
             })
             .then((data) => {
                 console.log(data)
+                signature = data.signature;
+                email = data.data.email;
+                loading = false;
             })
             .catch((error) => {
                 console.error(error)
@@ -89,11 +128,14 @@
     border 
     border-zinc-400
     rounded-lg">
+    {#if loading}
+        <p class="ml-24 mr-24 mt-24 mb-24">Loading data...</p>
+    {:else}
     <div class="flex flex-col mt-3 mr-24 ml-24 mb-24 gap-4">
         <div class="flex flex-col gap-4">
             <div class="border rounded-lg bg-sky-100 h-16 w-72">
                 <p class="text-gray-500 ml-28">Amount</p>
-                <input class="bg-sky-100 focus:outline-none ml-5" type="text" name="amount" placeholder="0" bind:value={amount}>
+                <input class="bg-sky-100 focus:outline-none ml-5" type="number" name="amount" placeholder="0" bind:value={amount}>
             </div>
             <div class="border rounded-lg bg-sky-100 h-16">
                 <p class="text-gray-500 ml-28">Recipient</p>
@@ -122,8 +164,9 @@
                 on:click={sendMoney}>
                     Send Money
                 </button>
+            </div>
         </div>
-    </div>
+        {/if}
 </div>
 {/if}
 </main>
