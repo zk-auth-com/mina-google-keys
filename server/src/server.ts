@@ -81,10 +81,14 @@ const RunServer = async () => {
   await app.register(async (route) => {
     route.get("/get_nonce", async (request, reply) => {
       reply.header("Access-Control-Allow-Origin", "*");
+      reply.header("Access-Control-Allow-Credentials", true);
+        
       await reply.send({ Result: { nonce: 0 } });
     });
     route.get("/send_to_contract", async (request, reply) => {
       reply.header("Access-Control-Allow-Origin", "*");
+      reply.header("Access-Control-Allow-Credentials", true);
+        
       await reply.send({ Result: "OK" });
     });
     route.post(
@@ -93,6 +97,8 @@ const RunServer = async () => {
       async (request, reply) => {
         console.log("tx info ", request.body);
         reply.header("Access-Control-Allow-Origin", "*");
+        reply.header("Access-Control-Allow-Credentials", true);
+        
         await reply.send({ Result: { tx: "0x1234567890" } });
       }
     );
