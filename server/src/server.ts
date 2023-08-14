@@ -47,7 +47,15 @@ const RunServer = async () => {
             },
           },
           signature: {
-            type: "string",
+            type: "object",
+            properties: {
+              r: {
+                type: "string",
+              },
+              s: {
+                type: "string",
+              },
+            },
           },
         },
       },
@@ -71,6 +79,10 @@ const RunServer = async () => {
   };
 
   await app.register(async (route) => {
+    route.get("/get_nonce", async (request, reply) => {
+      reply.header("Access-Control-Allow-Origin", "*");
+      await reply.send({ Result: { nonce: 0 } });
+    });
     route.get("/send_to_contract", async (request, reply) => {
       reply.header("Access-Control-Allow-Origin", "*");
       await reply.send({ Result: "OK" });
