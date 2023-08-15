@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck
+
     import { onMount } from 'svelte'
     // import ZkappClient from "$lib/zkapp/zkappClient";
 
@@ -6,14 +8,13 @@
     // const network = import.meta.env.VITE_BERKELEY_ENDPOINT;
     // const zkAppPublicKey = import.meta.env.VITE_PUBLIC_KEY_SMART_CONTRACT;
     let recipient = '';
-    // @ts-ignore
-    let amount = 0;
-    let nonce = 0;
+    let amount = '';
     let jwt = '';
     let email = '';
-    let signature = '';
+    let signature = {};
     let loading = true;
-
+    let isAmount = true;
+    let isRecipient = true;
 
     async function getMoney() {
         try {
@@ -22,44 +23,55 @@
             });
             const data = await response.json();
             console.log(data)
+            alert(JSON.stringify(data))
         } catch (err) {
-            console.log(`Error: ${err}`)
+            console.error(err)
         } 
     }
 
-    function sendMoney() {
-        fetch('http://localhost:3001/send_tx_from_contract', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            // @ts-ignore
-            body: {
-                // @ts-ignore
-                "tx_data": {
-                    // @ts-ignore
-                    "email": email,
-                    "recipient": recipient,
-                    "nonce": nonce,
-                    // @ts-ignore
-                    "amount": amount
-                },
-                "signature": signature
-            }
-        })
-        .then((response) => {
-            if(!response.ok){
-                throw new Error('Network response was not ok');
-            }
-            return response.json()
-        })
-        .then((data) => {
-            console.log(data)
-        })
-        .catch((error) => {
-            console.error(error)
-        })
+    async function sendMoney() {
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");  
+        
+        const getNonce = await fetch('http://91.240.85.151:3001/get_nonce');
+        const responseNonce = await getNonce.json();
+        const nonce = responseNonce.Result.nonce;
 
+        if(!amount) {
+            isAmount = false;
+            throw new Error('Amount is absent');
+        }
+
+        if(!recipient) {
+            isRecipient = false;
+            throw new Error('Recipient is absent');
+        }
+
+        const raw = JSON.stringify({
+            "tx_data": {
+                "email": email,
+                "recipient": recipient,
+                "nonce": Number(nonce),
+                "amount": Number(amount)
+            },
+            "signature": signature
+        });
+
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+
+        fetch("http://91.240.85.151:3001/send_tx_from_contract", requestOptions)
+        .then(response => response.json())
+        .then((result) => {
+            console.log(result)
+            alert(JSON.stringify(result))
+        })
+        .catch(error => console.log('error', error));
     }
 
     onMount(async () => {
@@ -72,7 +84,7 @@
             
             console.log('Encoded JWT ID token: ' + response.credential);
             jwt = response.credential;
-            fetch(`http://localhost:3030/auth/${response.credential}`)
+            fetch(`http://91.240.85.151:3030/auth/${response.credential}`)
             .then((response) => {
                 if(!response.ok){
                     throw new Error('Network response was not ok');
@@ -135,11 +147,19 @@
         <div class="flex flex-col gap-4">
             <div class="border rounded-lg bg-sky-100 h-16 w-72">
                 <p class="text-gray-500 ml-28">Amount</p>
-                <input class="bg-sky-100 focus:outline-none ml-5" type="number" name="amount" placeholder="0" bind:value={amount}>
+                {#if !isAmount}
+                <input class="bg-sky-100 focus:outline-none ml-5 custom-input w-64" type="text" name="amount" placeholder="Insert value!" bind:value={amount}>
+                {:else}
+                <input class="bg-sky-100 focus:outline-none ml-5 w-64" type="text" name="amount" placeholder="0" bind:value={amount}>
+                {/if}
             </div>
             <div class="border rounded-lg bg-sky-100 h-16">
                 <p class="text-gray-500 ml-28">Recipient</p>
-                <input class="bg-sky-100 focus:outline-none ml-5" type="text" name="recipient" placeholder="B62qpkAESZ...23yrZ" bind:value={recipient}>
+                {#if !isRecipient}
+                <input class="bg-sky-100 focus:outline-none ml-5 custom-input w-64" type="text" name="recipient" placeholder="Insert value!" bind:value={recipient}>
+                {:else}
+                <input class="bg-sky-100 focus:outline-none ml-5 w-64" type="text" name="recipient" placeholder="B62qpkAESZ...23yrZ" bind:value={recipient}>
+                {/if}
             </div>
         </div>
         <div class="flex flex-col mt-10">
@@ -147,9 +167,12 @@
                 border-2 
                 rounded-lg 
                 border-orange-600 
+                active:border-orange-700
+                active:border-3
                 text-orange-600 
                 hover:text-white 
-                hover:bg-orange-800" 
+                hover:bg-orange-800
+                active:bg-orange-900" 
                 on:click={getMoney}>
                     Get Money
                 </button>
@@ -158,9 +181,12 @@
                 border-2 
                 rounded-lg 
                 border-orange-600 
+                active:border-orange-700
+                active:border-3
                 text-orange-600 
                 hover:text-white 
-                hover:bg-orange-800" 
+                hover:bg-orange-800
+                active:bg-orange-900" 
                 on:click={sendMoney}>
                     Send Money
                 </button>
