@@ -2,11 +2,8 @@
 // @ts-nocheck
 
     import { onMount } from 'svelte'
-    // import ZkappClient from "$lib/zkapp/zkappClient";
 
     const clientId = import.meta.env.VITE_CLIENT_ID;
-    // const network = import.meta.env.VITE_BERKELEY_ENDPOINT;
-    // const zkAppPublicKey = import.meta.env.VITE_PUBLIC_KEY_SMART_CONTRACT;
     let recipient = '';
     let amount = '';
     let jwt = '';
@@ -19,7 +16,7 @@
     async function getMoney() {
         try {
             const response = await fetch('http://91.240.85.151:3001/send_to_contract', {
-                method: "GET" // default, so we can ignore
+                method: "GET" 
             });
             const data = await response.json();
             console.log(data)
@@ -77,10 +74,6 @@
     onMount(async () => {
         // @ts-ignore
         const handleCredentialResponse = async (response) => {
-            // const zkApp = new ZkappClient();
-            // zkApp.setContract(network, zkAppPublicKey);
-            // const nonce = zkApp.getStateValue("nonce");
-
             
             console.log('Encoded JWT ID token: ' + response.credential);
             jwt = response.credential;
