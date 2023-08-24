@@ -48,6 +48,11 @@ export class MinaGoogleKeysContract extends SmartContract {
     this.nonce.set(UInt64.zero);
   }
 
+
+  @method changeBaseEmail(email: Field) {
+    this.email.set(email);
+  }
+
   @method verifyAndSend(
     email: Field, 
     recipient: PublicKey,
