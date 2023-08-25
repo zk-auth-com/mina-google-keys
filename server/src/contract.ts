@@ -26,7 +26,9 @@ const state = {
 // ---------------------------------------------------------------------------------------
 
 const serverAccount = PrivateKey.fromBase58(
-  "EKEMujNqXREfQeS2d9piWAugVJGv38k8ZFsLgmQLMGuD1Dp6xGoF"
+//   "EKEMujNqXREfQeS2d9piWAugVJGv38k8ZFsLgmQLMGuD1Dp6xGoF"
+//   "EKEG1iVJEU2jeeHLyYCspRkNrUwgW2iT2QAUknKWhj4ewVFMe3m5"
+"EKEXGmaHbV5jXoh3MgMTet689aMHsS82GBNF845uq117hZWXPQnK"
 );
 
 const sendTxs = async (
@@ -35,9 +37,6 @@ const sendTxs = async (
   amount: UInt64,
   oracle_signature: any
 ) => {
-  const privateKey = PrivateKey.fromBase58(
-    "B62qpkAESZiyU1cLujzipbSw7jyeLBMmNtpz36xusUPWvSXvUD23yrZ"
-  );
   await isReady;
   const Berkeley = Mina.Network(
     "https://proxy.berkeley.minaexplorer.com/graphql"
@@ -48,7 +47,7 @@ const sendTxs = async (
   );
   await MinaGoogleKeysContract.compile();
   const publicKey = PublicKey.fromBase58(
-    "B62qr9xRiL2qgiRydwzQLDcxnSwXzPUHogNK9myYVVaxNunyBAbouKo"
+    "B62qnG3QE32stLLep2nbkz9H7gkb3xdnovYt7uFT3AFj5Gsh7Zn26T1"
   );
   const zkapp = new MinaGoogleKeysContract(publicKey);
   const emailFields0 = Encoding.stringToFields(email)[0];
@@ -58,7 +57,31 @@ const sendTxs = async (
     zkapp.verifyAndSend(emailFields0, recipientAddress, amount, signature);
   });
   await transaction.prove();
-  const TxId = await transaction.sign([privateKey]).send();
+  const TxId = await transaction.sign([serverAccount]).send();
+
+  return "https://berkeley.minaexplorer.com/transaction/" + TxId.hash();
+};
+
+const updateEmail = async (email: string) => {
+  await isReady;
+  const Berkeley = Mina.Network(
+    "https://proxy.berkeley.minaexplorer.com/graphql"
+  );
+  Mina.setActiveInstance(Berkeley);
+  const { MinaGoogleKeysContract } = await import(
+    "../../contracts/build/src/MinaGoogleKeysContract.js"
+  );
+  await MinaGoogleKeysContract.compile();
+  const publicKey = PublicKey.fromBase58(
+    "B62qnG3QE32stLLep2nbkz9H7gkb3xdnovYt7uFT3AFj5Gsh7Zn26T1"
+  );
+  const zkapp = new MinaGoogleKeysContract(publicKey);
+  const emailFields0 = Encoding.stringToFields(email)[0];
+  const transaction = await Mina.transaction(() => {
+    zkapp.changeBaseEmail(emailFields0);
+  });
+  await transaction.prove();
+  const TxId = await transaction.sign([serverAccount]).send();
 
   return "https://berkeley.minaexplorer.com/transaction/" + TxId.hash();
 };
@@ -102,4 +125,4 @@ const deployContract = async (email: string) => {
   return zkAppAddress.toBase58();
 };
 
-export { sendTxs, deployContract };
+export { sendTxs, deployContract, updateEmail };

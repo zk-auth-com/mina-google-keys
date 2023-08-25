@@ -20,7 +20,7 @@ const RunServer = async () => {
   });
 
   await app.register(fastifySwaggerUi, {
-    routePrefix: "/docs",
+    routePrefix: "/backend/docs",
   });
 
   const updateEmailSchema = {
@@ -131,7 +131,7 @@ const RunServer = async () => {
 
       await reply.send({ Result: "OK" });
     });
-    
+
     route.post("/update_email", updateEmailSchema, async (request, reply) => {
       console.log("email ", request.body);
       reply.header("Access-Control-Allow-Origin", "*");
