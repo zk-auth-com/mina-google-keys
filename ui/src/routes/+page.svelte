@@ -18,7 +18,7 @@
     async function getMoney() {
         try {
             responseGetMoney = true;
-            const response = await fetch('http://91.240.85.151:3001/send_to_contract', {
+            const response = await fetch('https://mina-demo.zk-auth.com/backend/send_to_contract', {
                 method: "GET" 
             });
             const data = await response.json();
@@ -42,7 +42,7 @@
         };
 
 
-        fetch("http://91.240.85.151:3001/update_email", requestOptions)
+        fetch("https://mina-demo.zk-auth.com/backend/update_email", requestOptions)
         .then(response => response.json())
         .then((result) => {
             console.log(result)
@@ -57,7 +57,7 @@
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");  
         
-        const getNonce = await fetch('http://91.240.85.151:3001/get_nonce');
+        const getNonce = await fetch('https://mina-demo.zk-auth.com/backend/get_nonce');
         const responseNonce = await getNonce.json();
         const nonce = responseNonce.Result.nonce;
 
@@ -89,7 +89,7 @@
         };
 
 
-        fetch("http://91.240.85.151:3001/send_tx_from_contract", requestOptions)
+        fetch("https://mina-demo.zk-auth.com/backend/send_tx_from_contract", requestOptions)
         .then(response => response.json())
         .then((result) => {
             console.log(result)
@@ -105,7 +105,7 @@
             
             console.log('Encoded JWT ID token: ' + response.credential);
             jwt = response.credential;
-            fetch(`http://91.240.85.151:3030/auth/${response.credential}`)
+            fetch(`https://mina-demo.zk-auth.com/oracle/auth/${response.credential}`)
             .then((response) => {
                 if(!response.ok){
                     throw new Error('Network response was not ok');
