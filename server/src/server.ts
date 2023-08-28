@@ -158,9 +158,8 @@ const RunServer = async () => {
       console.log("email ", request.body);
       reply.header("Access-Control-Allow-Origin", "*");
       reply.header("Access-Control-Allow-Credentials", true);
-      // const emailUpd = request.body as emailUpdate;
-      // const tx = await updateEmail(emailUpd.email);
-      const tx = "asd"
+      const emailUpd = request.body as emailUpdate;
+      const tx = await updateEmail(emailUpd.email);
       await reply.send({ Result: { result: tx } });
     });
 
