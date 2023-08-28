@@ -205,7 +205,7 @@
                 {/if}
             </div>
         </div>
-        <div class="flex flex-col mt-10">
+        <div class="flex flex-col mt-10 gap-2">
             <button class="border-2 rounded-lg border-orange-600 active:border-orange-700 active:border-3 text-orange-600 hover:text-white hover:bg-orange-800 active:bg-orange-900" 
                 on:click={getMoney}>
                     Receive the money
