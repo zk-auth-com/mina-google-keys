@@ -1,5 +1,5 @@
 import {Run} from "./server.js"
-import {deployContract, updateEmail} from "./contract.js"
+// import {deployContract, updateEmail} from "./contract.js"
 
 
 const main = async () => {
