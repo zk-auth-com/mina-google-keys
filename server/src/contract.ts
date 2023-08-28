@@ -2,7 +2,7 @@ import {
   Mina,
   PublicKey,
   Encoding,
-  fetchAccount,
+  // fetchAccount,
   AccountUpdate,
   PrivateKey,
   UInt64,
