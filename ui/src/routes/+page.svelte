@@ -34,10 +34,14 @@
         responseEmail = true;
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");  
+        var raw = JSON.stringify({
+            "email": email
+        });
 
         const requestOptions = {
             method: 'POST',
             headers: myHeaders,
+            body: raw,
             redirect: 'follow'
         };
 
