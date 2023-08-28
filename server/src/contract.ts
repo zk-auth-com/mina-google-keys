@@ -15,6 +15,7 @@ type Transaction = Awaited<ReturnType<typeof Mina.transaction>>;
 // ---------------------------------------------------------------------------------------
 
 import type { MinaGoogleKeysContract } from "../../contracts/build/src/MinaGoogleKeysContract.js";
+// import type  MinaGoogleKeysContract  from "../../contracts/build/src/MinaGoogleKeysContract.js";
 
 const state = {
   MinaGoogleKeysContract: null as null | typeof MinaGoogleKeysContract,
@@ -30,7 +31,7 @@ const serverAccount = PrivateKey.fromBase58(
   "EKEXGmaHbV5jXoh3MgMTet689aMHsS82GBNF845uq117hZWXPQnK"
 );
 
-const sendTxs = async (
+export const sendTxs = async (
   email: string,
   recipient: string,
   amount: number,
@@ -73,7 +74,7 @@ const sendTxs = async (
   return "https://berkeley.minaexplorer.com/transaction/" + TxId.hash();
 };
 
-const updateEmail = async (email: string) => {
+export const updateEmail = async (email: string) => {
   // await isReady;
   const Berkeley = Mina.Network(
     "https://proxy.berkeley.minaexplorer.com/graphql"
@@ -83,6 +84,7 @@ const updateEmail = async (email: string) => {
   const { MinaGoogleKeysContract } = await import(
     "../../contracts/build/src/MinaGoogleKeysContract.js"
   );
+  
   console.log("contract imported");
   await MinaGoogleKeysContract.compile();
   console.log("contract compiled");
@@ -114,7 +116,7 @@ const updateEmail = async (email: string) => {
   return "https://berkeley.minaexplorer.com/transaction/" + TxId.hash();
 };
 
-const deployContract = async (email: string) => {
+export const deployContract = async (email: string) => {
   // await isReady;
   console.log("setup network...");
   const Berkeley = Mina.Network(
@@ -153,4 +155,4 @@ const deployContract = async (email: string) => {
   return zkAppAddress.toBase58();
 };
 
-export { sendTxs, deployContract, updateEmail };
+export default { sendTxs, deployContract, updateEmail };

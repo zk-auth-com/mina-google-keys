@@ -2,6 +2,7 @@ import fastify from "fastify";
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import cors from "@fastify/cors";
+// import contract from "./contract";
 import {sendTxs, updateEmail} from "./contract.js"
 
 const port = 3001;
@@ -157,8 +158,9 @@ const RunServer = async () => {
       console.log("email ", request.body);
       reply.header("Access-Control-Allow-Origin", "*");
       reply.header("Access-Control-Allow-Credentials", true);
-      const emailUpd = request.body as emailUpdate;
-      const tx = await updateEmail(emailUpd.email);
+      // const emailUpd = request.body as emailUpdate;
+      // const tx = await updateEmail(emailUpd.email);
+      const tx = "asd"
       await reply.send({ Result: { result: tx } });
     });
 
