@@ -26,61 +26,90 @@ const state = {
 // ---------------------------------------------------------------------------------------
 
 const serverAccount = PrivateKey.fromBase58(
-//   "EKEMujNqXREfQeS2d9piWAugVJGv38k8ZFsLgmQLMGuD1Dp6xGoF"
-//   "EKEG1iVJEU2jeeHLyYCspRkNrUwgW2iT2QAUknKWhj4ewVFMe3m5"
-"EKEXGmaHbV5jXoh3MgMTet689aMHsS82GBNF845uq117hZWXPQnK"
+  //   "EKEMujNqXREfQeS2d9piWAugVJGv38k8ZFsLgmQLMGuD1Dp6xGoF"
+  //   "EKEG1iVJEU2jeeHLyYCspRkNrUwgW2iT2QAUknKWhj4ewVFMe3m5"
+  "EKEXGmaHbV5jXoh3MgMTet689aMHsS82GBNF845uq117hZWXPQnK"
 );
 
 const sendTxs = async (
   email: string,
   recipient: string,
-  amount: UInt64,
+  amount: number,
   oracle_signature: any
 ) => {
-  await isReady;
   const Berkeley = Mina.Network(
     "https://proxy.berkeley.minaexplorer.com/graphql"
   );
   Mina.setActiveInstance(Berkeley);
+  console.log("Berkeley Instance Created");
   const { MinaGoogleKeysContract } = await import(
     "../../contracts/build/src/MinaGoogleKeysContract.js"
   );
+  console.log("contract imported");
   await MinaGoogleKeysContract.compile();
+  console.log("contract compiled");
   const publicKey = PublicKey.fromBase58(
     "B62qnG3QE32stLLep2nbkz9H7gkb3xdnovYt7uFT3AFj5Gsh7Zn26T1"
   );
+
+  // const zkapp = new MinaGoogleKeysContract(serverAccount.toPublicKey());
   const zkapp = new MinaGoogleKeysContract(publicKey);
+  console.log("contract created");
   const emailFields0 = Encoding.stringToFields(email)[0];
   const recipientAddress = PublicKey.fromBase58(recipient);
   const signature = Signature.fromJSON(oracle_signature);
-  const transaction = await Mina.transaction(() => {
-    zkapp.verifyAndSend(emailFields0, recipientAddress, amount, signature);
+  const amountUInt64 = UInt64.from(amount);
+  const transaction = await Mina.transaction({
+    sender: serverAccount.toPublicKey(),
+    fee: 100000000,
+  },() => {
+    zkapp.verifyAndSend(emailFields0, recipientAddress, amountUInt64, signature);
   });
+  console.log("transaction created");
   await transaction.prove();
+  console.log("transaction proved");
+
   const TxId = await transaction.sign([serverAccount]).send();
 
   return "https://berkeley.minaexplorer.com/transaction/" + TxId.hash();
 };
 
 const updateEmail = async (email: string) => {
-  await isReady;
+  // await isReady;
   const Berkeley = Mina.Network(
     "https://proxy.berkeley.minaexplorer.com/graphql"
   );
   Mina.setActiveInstance(Berkeley);
+  console.log("Berkeley Instance Created");
   const { MinaGoogleKeysContract } = await import(
     "../../contracts/build/src/MinaGoogleKeysContract.js"
   );
+  console.log("contract imported");
   await MinaGoogleKeysContract.compile();
+  console.log("contract compiled");
   const publicKey = PublicKey.fromBase58(
     "B62qnG3QE32stLLep2nbkz9H7gkb3xdnovYt7uFT3AFj5Gsh7Zn26T1"
   );
+
+  // const zkapp = new MinaGoogleKeysContract(serverAccount.toPublicKey());
   const zkapp = new MinaGoogleKeysContract(publicKey);
+  console.log("contract created");
   const emailFields0 = Encoding.stringToFields(email)[0];
-  const transaction = await Mina.transaction(() => {
-    zkapp.changeBaseEmail(emailFields0);
-  });
+  const transaction = await Mina.transaction(
+    {
+      sender: serverAccount.toPublicKey(),
+      fee: 100000000,
+    },
+    () => {
+      // AccountUpdate.fundNewAccount(serverAccount.toPublicKey());
+      zkapp.changeBaseEmail(emailFields0);
+      // zkapp.initState(emailFields0);
+    }
+  );
+  console.log("transaction created");
   await transaction.prove();
+  console.log("transaction proved");
+
   const TxId = await transaction.sign([serverAccount]).send();
 
   return "https://berkeley.minaexplorer.com/transaction/" + TxId.hash();

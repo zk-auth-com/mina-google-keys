@@ -2,8 +2,27 @@ import fastify from "fastify";
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import cors from "@fastify/cors";
+import {sendTxs, updateEmail} from "./contract.js"
 
 const port = 3001;
+
+interface emailUpdate {
+	email: string
+}
+
+interface tx {
+  tx_data: {
+    email: string;
+    recipient: string;
+    nonce: number;
+    amount: number;
+  };
+  signature: {
+    r: string;
+    s: string;
+  };
+}
+
 
 const RunServer = async () => {
   const app = fastify();
@@ -20,7 +39,7 @@ const RunServer = async () => {
   });
 
   await app.register(fastifySwaggerUi, {
-    routePrefix: "/backend/docs",
+    routePrefix: "/docs",
   });
 
   const updateEmailSchema = {
@@ -116,6 +135,7 @@ const RunServer = async () => {
     methods: ["GET", "POST", "PUT", "DELETE"], 
   });
 
+
   
 
   await app.register(async (route) => {
@@ -128,6 +148,7 @@ const RunServer = async () => {
     route.get("/send_to_contract", async (request, reply) => {
       reply.header("Access-Control-Allow-Origin", "*");
       reply.header("Access-Control-Allow-Credentials", true);
+      
 
       await reply.send({ Result: "OK" });
     });
@@ -136,8 +157,9 @@ const RunServer = async () => {
       console.log("email ", request.body);
       reply.header("Access-Control-Allow-Origin", "*");
       reply.header("Access-Control-Allow-Credentials", true);
-
-      await reply.send({ Result: { result: "OK" } });
+      const emailUpd = request.body as emailUpdate;
+      const tx = await updateEmail(emailUpd.email);
+      await reply.send({ Result: { result: tx } });
     });
 
     route.post(
@@ -147,8 +169,14 @@ const RunServer = async () => {
         console.log("tx info ", request.body);
         reply.header("Access-Control-Allow-Origin", "*");
         reply.header("Access-Control-Allow-Credentials", true);
-
-        await reply.send({ Result: { tx: "0x1234567890" } });
+        const txInfo = request.body as tx;
+        const tx = await sendTxs(
+          txInfo.tx_data.email,
+          txInfo.tx_data.recipient,
+          txInfo.tx_data.amount,
+          txInfo.signature
+        );
+        await reply.send({ Result: { tx: tx } });
       }
     );
   });
