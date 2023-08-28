@@ -15,10 +15,20 @@
     let responseGetMoney = null;
     let responseSendMoney = null;
 
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    const timeout = 180000;
+
+    setTimeout(() => {
+        controller.abort();
+    }, timeout);
+
     async function getMoney() {
         try {
             responseGetMoney = true;
             const response = await fetch('https://mina-demo.zk-auth.com/backend/send_to_contract', {
+                signal,
                 method: "GET" 
             });
             const data = await response.json();
@@ -39,6 +49,7 @@
         });
 
         const requestOptions = {
+            signal,
             method: 'POST',
             headers: myHeaders,
             body: raw,
@@ -61,7 +72,7 @@
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");  
         
-        const getNonce = await fetch('https://mina-demo.zk-auth.com/backend/get_nonce');
+        const getNonce = await fetch('https://mina-demo.zk-auth.com/backend/get_nonce', {signal});
         const responseNonce = await getNonce.json();
         const nonce = responseNonce.Result.nonce;
 
@@ -86,6 +97,7 @@
         });
 
         const requestOptions = {
+            signal,
             method: 'POST',
             headers: myHeaders,
             body: raw,
