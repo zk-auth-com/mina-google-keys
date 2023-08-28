@@ -210,10 +210,10 @@
                 on:click={getMoney}>
                     Receive the money
                 </button>
-                <!-- <button class="border-2 rounded-lg border-orange-600 active:border-orange-700 active:border-3 text-orange-600 hover:text-white hover:bg-orange-800 active:bg-orange-900" 
+                <button class="border-2 rounded-lg border-orange-600 active:border-orange-700 active:border-3 text-orange-600 hover:text-white hover:bg-orange-800 active:bg-orange-900" 
                 on:click={sendMoney}>
                     Send Money
-                </button> -->
+                </button>
                 <button class="border-2 rounded-lg border-orange-600 active:border-orange-700 active:border-3 text-orange-600 hover:text-white hover:bg-orange-800 active:bg-orange-900" 
                 on:click={changeEmail}>
                     Change email
