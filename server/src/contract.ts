@@ -1,6 +1,5 @@
 import {
   Mina,
-  isReady,
   PublicKey,
   Encoding,
   fetchAccount,
