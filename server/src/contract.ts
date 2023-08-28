@@ -115,7 +115,7 @@ const updateEmail = async (email: string) => {
 };
 
 const deployContract = async (email: string) => {
-  await isReady;
+  // await isReady;
   console.log("setup network...");
   const Berkeley = Mina.Network(
     "https://proxy.berkeley.minaexplorer.com/graphql"
