@@ -17,6 +17,9 @@
 
     async function getMoney() {
         try {
+            if(responseEmail || responseSendMoney) {
+                throw new Error("Another operation in progress");
+            }
             responseGetMoney = true;
             const response = await fetch('https://mina-demo.zk-auth.com/backend/send_to_contract', {
                 method: "GET" 
@@ -31,6 +34,9 @@
     }
 
     async function changeEmail() {
+        if(responseGetMoney || responseSendMoney) {
+            throw new Error("Another operation in progress");
+        }
         responseEmail = true;
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");  
@@ -57,12 +63,16 @@
     }
 
     async function sendMoney() {
+        if(responseEmail || responseGetMoney) {
+            throw new Error("Another operation in progress");
+        }
         responseSendMoney = true;
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");  
         
         const getNonce = await fetch('https://mina-demo.zk-auth.com/backend/get_nonce',);
         const responseNonce = await getNonce.json();
+        console.log(responseNonce)
         const nonce = responseNonce.Result.nonce;
 
         if(!amount) {
