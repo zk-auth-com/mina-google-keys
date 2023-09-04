@@ -1,9 +1,17 @@
 {
   "version": 1,
   "deployAliases": {
-    "mina-google-keys-contract": {
+    "minagoogle": {
       "url": "https://proxy.berkeley.minaexplorer.com/graphql",
-      "keyPath": "keys/mina-google-keys-contract.json",
+      "keyPath": "keys/minagoogle.json",
+      "feepayerKeyPath": "/Users/pavelklybik/.cache/zkapp-cli/keys/ekeg1ivjeu2jeehlyycsprknruwgw2it2qauknkwhj4ewvfme3m5.json",
+      "feepayerAlias": "ekeg1ivjeu2jeehlyycsprknruwgw2it2qauknkwhj4ewvfme3m5",
+      "fee": "0.1",
+      "smartContract": "MinaGoogleKeysContract"
+    },
+    "minasecond": {
+      "url": "https://proxy.berkeley.minaexplorer.com/graphql",
+      "keyPath": "keys/minasecond.json",
       "feepayerKeyPath": "/Users/pavelklybik/.cache/zkapp-cli/keys/ekeg1ivjeu2jeehlyycsprknruwgw2it2qauknkwhj4ewvfme3m5.json",
       "feepayerAlias": "ekeg1ivjeu2jeehlyycsprknruwgw2it2qauknkwhj4ewvfme3m5",
       "fee": "0.1",

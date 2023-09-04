@@ -30,7 +30,7 @@ export class MinaGoogleKeysContract extends SmartContract {
 
   deploy(args: DeployArgs) {
     super.deploy(args);
-
+    this.oraclePublicKey.set(PublicKey.fromBase58(ORACLE_PUBLIC_KEY));
     const permissionToEdit = Permissions.proof();
 
     this.account.permissions.set({
@@ -51,6 +51,8 @@ export class MinaGoogleKeysContract extends SmartContract {
 
   @method changeBaseEmail(email: Field) {
     this.email.set(email);
+    this.oraclePublicKey.set(PublicKey.fromBase58(ORACLE_PUBLIC_KEY));
+    this.nonce.set(UInt64.zero);
   }
 
   @method verifyAndSend(
@@ -63,12 +65,12 @@ export class MinaGoogleKeysContract extends SmartContract {
     // const senderBalance = Mina.getBalance(this.sender);
     // senderBalance.assertGreaterThanOrEqual(amount);
 
-    const oraclePublicKey = this.oraclePublicKey.get();
-    this.oraclePublicKey.assertEquals(oraclePublicKey);
-
+    
     const currentEmail = this.email.get();
     this.email.assertEquals(currentEmail);
     currentEmail.assertEquals(email);
+    const oraclePublicKey = this.oraclePublicKey.get();
+    this.oraclePublicKey.assertEquals(oraclePublicKey);
 
     const validSignature = signature.verify(oraclePublicKey, [
       email,
