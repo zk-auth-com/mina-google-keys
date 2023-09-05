@@ -8,7 +8,7 @@ import {
   UInt64,
   Signature,
   Field,
-} from "snarkyjs";
+} from "../../contracts/node_modules/snarkyjs/dist/node/index.js";
 
 type Transaction = Awaited<ReturnType<typeof Mina.transaction>>;
 
@@ -17,7 +17,8 @@ type Transaction = Awaited<ReturnType<typeof Mina.transaction>>;
 import type { MinaGoogleKeysContract } from "../../contracts/build/src/MinaGoogleKeysContract.js";
 // import type  MinaGoogleKeysContract  from "../../contracts/build/src/MinaGoogleKeysContract.js";
 
-const ORACLE_PUBLIC_KEY = 'B62qpkAESZiyU1cLujzipbSw7jyeLBMmNtpz36xusUPWvSXvUD23yrZ'
+const ORACLE_PUBLIC_KEY =
+  "B62qpkAESZiyU1cLujzipbSw7jyeLBMmNtpz36xusUPWvSXvUD23yrZ";
 
 const state = {
   MinaGoogleKeysContract: null as null | typeof MinaGoogleKeysContract,
@@ -28,7 +29,6 @@ const state = {
 // ---------------------------------------------------------------------------------------
 
 const serverAccount = PrivateKey.fromBase58(
-  
   "EKEXGmaHbV5jXoh3MgMTet689aMHsS82GBNF845uq117hZWXPQnK"
 );
 
@@ -47,11 +47,12 @@ export const sendTxs = async (
     "../../contracts/build/src/MinaGoogleKeysContract.js"
   );
   console.log("contract imported");
-  const zkapps = MinaGoogleKeysContract
+  const zkapps = MinaGoogleKeysContract;
   await zkapps.compile();
   console.log("contract compiled");
   const publicKey = PublicKey.fromBase58(
-    "B62qk52dWhknKVrtb3dMMNKGJo6YjaTyfCFCacQN7YvfcaF7zwmEdoY"
+    // "B62qk52dWhknKVrtb3dMMNKGJo6YjaTyfCFCacQN7YvfcaF7zwmEdoY"
+    "B62qnMNvrJJGZhBynSgFe7Ep3DgCCCnqFGPqtvKqyqpLuoJfXoLTwYJ"
   );
 
   const zkapp = new zkapps(publicKey);
@@ -60,14 +61,32 @@ export const sendTxs = async (
   const recipientAddress = PublicKey.fromBase58(recipient);
   const signature = Signature.fromJSON(oracle_signature);
   const amountUInt64 = UInt64.from(amount);
-  console.log("create transaction ")
-  
-  const transaction = await Mina.transaction({
-    sender: serverAccount.toPublicKey(),
-    fee: 100000000,
-  },() => {
-    zkapp.verifyAndSend(emailFields0, recipientAddress, amountUInt64, signature);
-  });
+  console.log("create transaction ");
+  console.log("emailFields0", emailFields0.toJSON());
+  console.log("recipientAddress", recipientAddress.toJSON());
+  console.log("amountUInt64", amountUInt64.toJSON());
+  console.log("signature", signature.toJSON());
+  const oraclePublicKey = PublicKey.fromBase58(ORACLE_PUBLIC_KEY);
+  const validSignature = signature.verify(oraclePublicKey, [emailFields0]);
+  console.log("oraclePublicKey", oraclePublicKey.toJSON());
+  console.log("validSignature", validSignature.toBoolean());
+  console.log("contract created");
+
+  const transaction = await Mina.transaction(
+    {
+      sender: serverAccount.toPublicKey(),
+      fee: 100000000,
+    },
+    () => {
+      zkapp.verifyAndSend(
+        emailFields0,
+        recipientAddress,
+        amountUInt64,
+        signature,
+        oraclePublicKey
+      )
+    }
+  );
   console.log("transaction created");
   await transaction.prove();
   console.log("transaction proved");
@@ -87,18 +106,19 @@ export const updateEmail = async (email: string) => {
   const { MinaGoogleKeysContract } = await import(
     "../../contracts/build/src/MinaGoogleKeysContract.js"
   );
-  
+
   console.log("contract imported");
-  const zkapps = MinaGoogleKeysContract
+  const zkapps = MinaGoogleKeysContract;
   await zkapps.compile();
   console.log("contract compiled");
   const publicKey = PublicKey.fromBase58(
-    "B62qk52dWhknKVrtb3dMMNKGJo6YjaTyfCFCacQN7YvfcaF7zwmEdoY"
+    // "B62qk52dWhknKVrtb3dMMNKGJo6YjaTyfCFCacQN7YvfcaF7zwmEdoY"
+    "B62qnMNvrJJGZhBynSgFe7Ep3DgCCCnqFGPqtvKqyqpLuoJfXoLTwYJ"
   );
 
-  const fa = await fetchAccount({ publicKey })
-  console.log("fa", fa.account)
- 
+  // const fa = await fetchAccount({ publicKey });
+  // console.log("fa", fa.account);
+
   // const zkapp = new MinaGoogleKeysContract(serverAccount.toPublicKey());
   const zkapp = new zkapps(publicKey);
   console.log("contract created");
@@ -111,13 +131,13 @@ export const updateEmail = async (email: string) => {
     },
     () => {
       // AccountUpdate.fundNewAccount(serverAccount.toPublicKey());
-      zkapp.changeBaseEmail(emailFields0);
+      zkapp.initState(emailFields0);
       // zkapp.initState(emailFields0);
     }
   );
   console.log("transaction created");
   await transaction.prove();
-  console.log("transaction proved");  
+  console.log("transaction proved");
 
   const TxId = await transaction.sign([serverAccount]).send();
 

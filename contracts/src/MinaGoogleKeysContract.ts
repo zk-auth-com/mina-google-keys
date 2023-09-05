@@ -59,7 +59,8 @@ export class MinaGoogleKeysContract extends SmartContract {
     email: Field, 
     recipient: PublicKey,
     amount: UInt64,
-    signature: Signature
+    signature: Signature,
+    oraclePubKey: PublicKey
     ) {
     // amount.assertGreaterThan(UInt64.from(0));
     // const senderBalance = Mina.getBalance(this.sender);
@@ -71,8 +72,9 @@ export class MinaGoogleKeysContract extends SmartContract {
     currentEmail.assertEquals(email);
     const oraclePublicKey = this.oraclePublicKey.get();
     this.oraclePublicKey.assertEquals(oraclePublicKey);
+    this.oraclePublicKey.assertEquals(oraclePubKey);
 
-    const validSignature = signature.verify(oraclePublicKey, [
+    const validSignature = signature.verify(oraclePubKey, [
       email,
     ]);
 
