@@ -11,7 +11,7 @@ import {
   Field,
   Bool,
   AccountUpdate
-} from 'snarkyjs';
+} from 'o1js';
 
 
 // const tokenSymbol = 'MYTKN';
@@ -70,8 +70,8 @@ export class MinaGoogleKeysContract extends SmartContract {
     const currentEmail = this.email.get();
     this.email.assertEquals(currentEmail);
     currentEmail.assertEquals(email);
-    const oraclePublicKey = this.oraclePublicKey.get();
-    this.oraclePublicKey.assertEquals(oraclePublicKey);
+    // const oraclePublicKey = this.oraclePublicKey.get();
+    // this.oraclePublicKey.assertEquals(oraclePublicKey);
     this.oraclePublicKey.assertEquals(oraclePubKey);
 
     const validSignature = signature.verify(oraclePubKey, [

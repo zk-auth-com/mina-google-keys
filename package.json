@@ -13,16 +13,9 @@
   "keywords": [
     "wordle",
     "mina",
-    "snarkyjs",
+    "o1js",
     "zkapp"
   ],
   "author": "t4top",
-  "license": "GPL-3.0-or-later",
-  "bugs": {
-    "url": "https://github.com/t4top/mina-wordle-game/issues"
-  },
-  "homepage": "https://github.com/t4top/mina-wordle-game#readme",
-  "dependencies": {
-    "snarkyjs": "^0.12.1"
-  }
+  "license": "GPL-3.0-or-later"
 }

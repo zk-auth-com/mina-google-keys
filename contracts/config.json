@@ -24,6 +24,14 @@
       "feepayerAlias": "ekeg1ivjeu2jeehlyycsprknruwgw2it2qauknkwhj4ewvfme3m5",
       "fee": "0.1",
       "smartContract": "MinaGoogleKeysContract"
+    },
+    "minaforth": {
+      "url": "https://proxy.berkeley.minaexplorer.com/graphql",
+      "keyPath": "keys/minaforth.json",
+      "feepayerKeyPath": "/Users/pavelklybik/.cache/zkapp-cli/keys/ekeg1ivjeu2jeehlyycsprknruwgw2it2qauknkwhj4ewvfme3m5.json",
+      "feepayerAlias": "ekeg1ivjeu2jeehlyycsprknruwgw2it2qauknkwhj4ewvfme3m5",
+      "fee": "0.1",
+      "smartContract": "MinaGoogleKeysContract"
     }
   }
 }
