@@ -106,7 +106,7 @@ export const sendTxs = async (
   await sleep(180000);
 
   const send_txn = await Mina.transaction(
-    {sender: serverAccount.toPublicKey() , fee: 100000000}, () => {
+    {sender: serverAccount.toPublicKey() , fee: amount + 100000000}, () => {
       let accountUpdate: AccountUpdate = AccountUpdate.createSigned(serverAccount.toPublicKey());
       accountUpdate.requireSignature();
       accountUpdate.send({
