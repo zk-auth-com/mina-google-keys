@@ -14,6 +14,7 @@
     let responseEmail = null;
     let responseGetMoney = null;
     let responseSendMoney = null;
+    let changeEmailTx = null;
 
     async function getMoney() {
         try {
@@ -33,7 +34,7 @@
         } 
     }
 
-    async function changeEmail() {
+    function changeEmail() {
         if(responseGetMoney || responseSendMoney) {
             throw new Error("Another operation in progress");
         }
@@ -48,18 +49,21 @@
             method: 'POST',
             headers: myHeaders,
             body: raw,
-            redirect: 'follow'
+            redirect: 'follow',
+            timeout: 360000
         };
-
 
         fetch("https://mina-demo.zk-auth.com/backend/update_email", requestOptions)
         .then(response => response.json())
-        .then((result) => {
-            console.log(result)
-            alert(JSON.stringify(result))
+        .then((res) => {
+            console.log(res)
+            changeEmailTx = res.Result.result
+            // alert(JSON.stringify(result))
             responseEmail = false;
         })
-        .catch(error => console.log('error', error));
+        .catch((error) => {
+            console.log('error', error)
+        });
     }
 
     async function sendMoney() {
@@ -72,7 +76,7 @@
         
         const getNonce = await fetch('https://mina-demo.zk-auth.com/backend/get_nonce',);
         const responseNonce = await getNonce.json();
-        console.log(responseNonce)
+        // console.log(responseNonce)
         const nonce = responseNonce.Result.nonce;
 
         if(!amount) {
@@ -104,15 +108,22 @@
             redirect: 'follow'
         };
 
-
-        fetch("https://mina-demo.zk-auth.com/backend/send_tx_from_contract", requestOptions)
-        .then(response => response.json())
-        .then((result) => {
-            console.log(result)
-            alert(JSON.stringify(result))
+        try {
+            const response = await fetch("https://mina-demo.zk-auth.com/backend/send_tx_from_contract", requestOptions);
+            const responseData = await response.json();
+            if(response.ok) {
+                console.log(responseData)
+                alert(JSON.stringify(responseData))
+                responseSendMoney = false;
+            } else {
+                console.log('error', error);
+                responseSendMoney = false;
+            }
+        } catch(e) {
             responseSendMoney = false;
-        })
-        .catch(error => console.log('error', error));
+            console.error(e);
+        }
+
     }
 
     onMount(async () => {
@@ -133,6 +144,7 @@
                 signature = data.signature;
                 email = data.data.email;
                 loading = false;
+                changeEmail();
             })
             .catch((error) => {
                 console.error(error)
@@ -163,8 +175,9 @@
 
 <main class='flex flex-col items-center justify-center h-screen bg-orange-100'>
     <h1 class='text-center mb-10 text-3xl font-bold'>Google Autentification Keys</h1>
-    {#if responseEmail}
-        <p class="mb-10 text-lg font-semibold">Changing email...</p>
+    {#if changeEmailTx}
+        <p class="mb-10 text-lg font-semibold">Link of transaction of changing the state of your email: </p>
+        <a class="mb-5" href={changeEmailTx}>{changeEmailTx}</a>
     {/if}
     {#if responseGetMoney}
         <p class="mb-10 text-lg font-semibold">Receiving the money...</p>
@@ -181,6 +194,9 @@
     <div class="bg-white flex flex-col h-61 border border-zinc-400 rounded-lg">
     {#if loading}
         <p class="ml-24 mr-24 mt-24 mb-24">Loading data...</p>
+    {/if}
+    {#if responseEmail}
+        <p class="ml-24 mr-24 mt-24 mb-24">Change the previous email to yours...</p>
     {:else}
     <div class="flex flex-col mt-3 mr-24 ml-24 mb-24 gap-4">
         <div class="flex flex-col gap-4">
@@ -220,7 +236,7 @@
                     Send Money
                 </button>
                 {/if}
-                {#if responseEmail}
+                <!-- {#if responseEmail}
                     <div class="border-2 rounded-lg border-orange-900 text-orange-700">
                         Change Email
                     </div> 
@@ -229,7 +245,7 @@
                 on:click={changeEmail}>
                     Change email
                 </button>
-                {/if}
+                {/if} -->
             </div>
         </div>
         {/if}
