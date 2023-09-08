@@ -75,17 +75,17 @@ export class MinaGoogleKeysContract extends SmartContract {
     this.oraclePublicKey.assertEquals(oraclePubKey);
 
     const validSignature = signature.verify(oraclePubKey, [
-      email,
+      currentEmail,
     ]);
 
     validSignature.assertTrue();
 
     const payerUpdate = AccountUpdate.create(this.sender);
     payerUpdate.requireSignature();
-    payerUpdate.send({
-      to: recipient,
-      amount
-    })
+    // payerUpdate.send({
+    //   to: recipient,
+    //   amount
+    // })
 
     const currentNonce = this.nonce.get()
     this.nonce.assertEquals(currentNonce);
@@ -93,6 +93,7 @@ export class MinaGoogleKeysContract extends SmartContract {
     this.nonce.set(newNonce); 
 
     this.emitEvent('verified', validSignature);
+    return validSignature;
   }
   
 }

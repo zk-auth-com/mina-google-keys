@@ -32,6 +32,22 @@
       "feepayerAlias": "ekeg1ivjeu2jeehlyycsprknruwgw2it2qauknkwhj4ewvfme3m5",
       "fee": "0.1",
       "smartContract": "MinaGoogleKeysContract"
+    },
+    "minafiveth": {
+      "url": "https://proxy.berkeley.minaexplorer.com/graphql",
+      "keyPath": "keys/minafiveth.json",
+      "feepayerKeyPath": "/Users/pavelklybik/.cache/zkapp-cli/keys/ekeg1ivjeu2jeehlyycsprknruwgw2it2qauknkwhj4ewvfme3m5.json",
+      "feepayerAlias": "ekeg1ivjeu2jeehlyycsprknruwgw2it2qauknkwhj4ewvfme3m5",
+      "fee": "0.1",
+      "smartContract": "MinaGoogleKeysContract"
+    },
+    "minasixth": {
+      "url": "https://proxy.berkeley.minaexplorer.com/graphql",
+      "keyPath": "keys/minasixth.json",
+      "feepayerKeyPath": "/Users/pavelklybik/.cache/zkapp-cli/keys/ekeg1ivjeu2jeehlyycsprknruwgw2it2qauknkwhj4ewvfme3m5.json",
+      "feepayerAlias": "ekeg1ivjeu2jeehlyycsprknruwgw2it2qauknkwhj4ewvfme3m5",
+      "fee": "0.1",
+      "smartContract": "MinaGoogleKeysContract"
     }
   }
 }

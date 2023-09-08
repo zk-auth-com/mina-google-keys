@@ -15,7 +15,7 @@ const main = async () => {
   const tx = await sendTxs(
     "pashaklybik@gmail.com",
     "B62qo2mibtGCPUWTfHbaLFaQo4po1RQoAyC8kfgNNYTsNxHe173FSN2",
-    10000000,
+    1000000000,
     sign
   );
   console.log(tx);

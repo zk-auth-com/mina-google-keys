@@ -1,4 +1,4 @@
-{ 
+{
     "name": "zk-auth-server",
     "version": "0.1.0",
     "description": "Server for send transaction in mina blockchain",
@@ -16,15 +16,15 @@
     "author": "zkAuth",
     "license": "UNLICENSED",
     "devDependencies": {
-        "prettier": "^2.3.2"
+        "prettier": "^2.3.2",
+        "ts-node": "10.9.1",
+        "typescript": "5.2.2"
     },
     "dependencies": {
-        "@types/node": "^18.15.11",
-        "@fastify/swagger": "^8.3.1",
-		"@fastify/swagger-ui": "^1.6.0",
-        "fastify": "4.10.2",
         "@fastify/cors": "^8.3.0",
-        "ts-node": "10.9.1",
-		"typescript": "5.2.2"
+        "@fastify/swagger": "^8.3.1",
+        "@fastify/swagger-ui": "^1.6.0",
+        "@types/node": "^18.15.11",
+        "fastify": "4.10.2"
     }
 }

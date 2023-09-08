@@ -3,6 +3,7 @@ import {
   PublicKey,
   Encoding,
   fetchAccount,
+  Bool,
   AccountUpdate,
   PrivateKey,
   UInt64,
@@ -54,7 +55,9 @@ export const sendTxs = async (
   const publicKey = PublicKey.fromBase58(
     // "B62qk52dWhknKVrtb3dMMNKGJo6YjaTyfCFCacQN7YvfcaF7zwmEdoY"
     // "B62qnMNvrJJGZhBynSgFe7Ep3DgCCCnqFGPqtvKqyqpLuoJfXoLTwYJ"
-    "B62qmeQWxiRAPX8Rm6QC7CGjYutfiNwuMdHaqPUK9mak9XesuBoK663"
+    // "B62qmeQWxiRAPX8Rm6QC7CGjYutfiNwuMdHaqPUK9mak9XesuBoK663"
+    // "B62qpFonee79QXcRXDbtTzxV9dABsgxK1LAs6NtuaynxcZPPLrNHCz6"
+    "B62qrGHXQVuU8vcoRv6M3fXtQC2MBWCGmYfxKbEd9URST1KQU2766Qa"
   );
 
   const zkapp = new zkapps(publicKey);
@@ -69,10 +72,11 @@ export const sendTxs = async (
   console.log("amountUInt64", amountUInt64.toJSON());
   console.log("signature", signature.toJSON());
   const oraclePublicKey = PublicKey.fromBase58(ORACLE_PUBLIC_KEY);
-  const validSignature = signature.verify(oraclePublicKey, [emailFields0]);
+  // const validSignature = signature.verify(oraclePublicKey, [emailFields0]);
   console.log("oraclePublicKey", oraclePublicKey.toJSON());
-  console.log("validSignature", validSignature.toBoolean());
+  // console.log("validSignature", validSignature.toBoolean());
   console.log("contract created");
+  let validSignature: Bool =  Bool(false);
 
   let transaction = await Mina.transaction(
     {
@@ -80,7 +84,7 @@ export const sendTxs = async (
       fee: 100000000,
     },
     () => {
-      zkapp.verifyAndSend(
+      validSignature = zkapp.verifyAndSend(
         emailFields0,
         recipientAddress,
         amountUInt64,
@@ -95,10 +99,24 @@ export const sendTxs = async (
   console.log("transaction signed", test);
   await transaction.prove();
   console.log("transaction proved");
+  await transaction.send();
 
-  const TxId = await transaction.send();
+  const send_txn = await Mina.transaction(
+    {sender: serverAccount.toPublicKey() , fee: 100000000}, () => {
+      let accountUpdate: AccountUpdate = AccountUpdate.createSigned(serverAccount.toPublicKey());
+      accountUpdate.requireSignature();
+      accountUpdate.send({
+            to: recipientAddress,
+            amount: amount,
+        });
+    })
+    console.log('create tx')
+    await send_txn.prove()
+    console.log('prove tx')
+    const TxId =  await send_txn.sign([serverAccount]).send()
+    console.log('send tx')
 
-  return "https://berkeley.minaexplorer.com/transaction/" + TxId.hash();
+  return "https://minascan.io/testworld2/zk-tx/" + TxId.hash();
 };
 
 export const updateEmail = async (email: string) => {
@@ -119,7 +137,9 @@ export const updateEmail = async (email: string) => {
   const publicKey = PublicKey.fromBase58(
     // "B62qk52dWhknKVrtb3dMMNKGJo6YjaTyfCFCacQN7YvfcaF7zwmEdoY"
     // "B62qnMNvrJJGZhBynSgFe7Ep3DgCCCnqFGPqtvKqyqpLuoJfXoLTwYJ"
-    "B62qmeQWxiRAPX8Rm6QC7CGjYutfiNwuMdHaqPUK9mak9XesuBoK663"
+    // "B62qmeQWxiRAPX8Rm6QC7CGjYutfiNwuMdHaqPUK9mak9XesuBoK663"
+    // "B62qpFonee79QXcRXDbtTzxV9dABsgxK1LAs6NtuaynxcZPPLrNHCz6"
+    "B62qrGHXQVuU8vcoRv6M3fXtQC2MBWCGmYfxKbEd9URST1KQU2766Qa"
   );
 
   // const fa = await fetchAccount({ publicKey });
@@ -147,7 +167,7 @@ export const updateEmail = async (email: string) => {
 
   const TxId = await transaction.sign([serverAccount]).send();
 
-  return "https://berkeley.minaexplorer.com/transaction/" + TxId.hash();
+  return "https://minascan.io/testworld2/zk-tx/" + TxId.hash();
 };
 
 export const deployContract = async (email: string) => {
