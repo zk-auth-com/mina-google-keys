@@ -176,17 +176,17 @@
     <main class='flex flex-col items-center justify-center h-screen bg-orange-100'>
         <h1 class='text-center mb-10 text-3xl font-bold'>Google Autentification</h1>
         {#if changeEmailTx}
-            <p class="mb-10 text-lg font-semibold">Link of transaction of changing the state of your email: </p>
+            <p class="mb-10 text-lg font-semibold">Link to the transaction for changing the status of your email.: </p>
             <a class="mb-5" href={changeEmailTx}>{changeEmailTx}</a>
         {/if}
         {#if responseGetMoney}
-            <p class="mb-10 text-lg font-semibold">Receiving the money...</p>
+            <p class="mb-10 text-lg font-semibold">Receiving...</p>
         {/if}
         {#if responseSendMoney}
-            <p class="mb-10 text-lg font-semibold">Sending the money...</p>
+            <p class="mb-10 text-lg font-semibold">Sending...</p>
         {/if}
         {#if !jwt}
-            <p class="mb-10 text-lg font-semibold">First of all connect log into your google account</p>
+            <p class="mb-10 text-lg font-semibold">Sign In with your Google Account</p>
         {/if}
         {#if !jwt}
         <div class="mt-16" id="signInDiv"/>
