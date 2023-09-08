@@ -77,11 +77,13 @@
 
         if(!amount) {
             isAmount = false;
+            responseSendMoney = false
             throw new Error('Amount is absent');
         }
 
         if(!recipient) {
             isRecipient = false;
+            responseSendMoney = false
             throw new Error('Recipient is absent');
         }
 
@@ -208,14 +210,26 @@
                 on:click={getMoney}>
                     Receive the money
                 </button> -->
+                {#if responseSendMoney}
+                <div class="border-2 rounded-lg border-orange-900 text-orange-700">
+                    Send Money
+                </div> 
+                {:else}
                 <button class="border-2 rounded-lg border-orange-600 active:border-orange-700 active:border-3 text-orange-600 hover:text-white hover:bg-orange-800 active:bg-orange-900" 
                 on:click={sendMoney}>
                     Send Money
                 </button>
+                {/if}
+                {#if responseEmail}
+                    <div class="border-2 rounded-lg border-orange-900 text-orange-700">
+                        Change Email
+                    </div> 
+                {:else}
                 <button class="border-2 rounded-lg border-orange-600 active:border-orange-700 active:border-3 text-orange-600 hover:text-white hover:bg-orange-800 active:bg-orange-900" 
                 on:click={changeEmail}>
                     Change email
                 </button>
+                {/if}
             </div>
         </div>
         {/if}
