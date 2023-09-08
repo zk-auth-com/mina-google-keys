@@ -33,6 +33,9 @@ const serverAccount = PrivateKey.fromBase58(
   "EKEXGmaHbV5jXoh3MgMTet689aMHsS82GBNF845uq117hZWXPQnK"
 );
 
+const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+
 export const sendTxs = async (
   email: string,
   recipient: string,
@@ -95,11 +98,12 @@ export const sendTxs = async (
   );
   console.log("transaction created");
   transaction = transaction.sign([serverAccount]);
-  const test= await transaction.toJSON()
-  console.log("transaction signed", test);
+  // const test= await transaction.toJSON()
+  // console.log("transaction signed", test);
   await transaction.prove();
   console.log("transaction proved");
   await transaction.send();
+  await sleep(180000);
 
   const send_txn = await Mina.transaction(
     {sender: serverAccount.toPublicKey() , fee: 100000000}, () => {
