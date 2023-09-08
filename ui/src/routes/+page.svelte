@@ -174,7 +174,7 @@
     </svelte:head>
     
     <main class='flex flex-col items-center justify-center h-screen bg-orange-100'>
-        <h1 class='text-center mb-10 text-3xl font-bold'>Google Autentification Keys</h1>
+        <h1 class='text-center mb-10 text-3xl font-bold'>Google Autentification</h1>
         {#if changeEmailTx}
             <p class="mb-10 text-lg font-semibold">Link of transaction of changing the state of your email: </p>
             <a class="mb-5" href={changeEmailTx}>{changeEmailTx}</a>
